@@ -20,7 +20,6 @@
         "symfony/monolog-bundle": "^3.6",
         "symfony/proxy-manager-bridge": "5.2.*",
         "symfony/security-bundle": "5.2.*",
-        "symfony/webpack-encore-bundle": "^1.8",
         "symfony/yaml": "5.2.*"
     },
     "require-dev": {
