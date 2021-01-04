@@ -1,14 +1,41 @@
 <header>
-    <nav class="nav navbar-dark bg-dark navbar-expand-lg justify-content-center">
-        <a class="navbar-brand" href="#">Little-Monkeys</a>
-        <li class="nav-item">
-            <a href="#" class="nav-link">S'enregistrer</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">Annuaire</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">Se connecter</a>
-        </li>
+
+{% if app.user == NULL %}
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a href="#" class="navbar-brand">Little-Monkeys</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav mr-auto">
+                <a href="#" class="nav-link">S'enregistrer</a>
+                <a href="#" class="nav-link">Annuaire</a>
+                <a href="#" class="nav-link">Se connecter</a>
+            </div>
+        </div>
     </nav>
+
+{% else %}
+    
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a href="#" class="navbar-brand">Little-Monkeys</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportContent" aria-controls="navbarSupportContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportContent">
+            <div class="navbar-nav mr-auto">
+                <a href="#" class="nav-link">Créer un projet</a>
+                <a href="#" class="nav-link">Mon profil</a>
+                <a href="#" class="nav-link">Mes offres</a>
+                <a href="#" class="nav-link">Mes projets</a>
+                <a href="#" class="nav-link">Annuaire</a>
+                <a href="#" class="nav-link">Se déconnecter</a>
+            </div>
+        </div>
+    </nav>
+
+{% endif %}
+
 </header>
