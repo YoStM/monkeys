@@ -96,7 +96,7 @@ class UserFormAuthenticator extends AbstractFormLoginAuthenticator implements Pa
             return new RedirectResponse($targetPath);
         }
         // I choose to redirect the user to redirect the user to the home page once logged in.
-        return new RedirectResponse($this->urlGenerator->generate('main_home'));
+        //return new RedirectResponse($this->urlGenerator->generate('main_home'));
 
         throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
