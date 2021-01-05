@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Inscription{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <form method="post">
+            {{form_start(registrationForm)}}
+
+                {{form_row(registrationForm.username)}}
+                {{form_row(registrationForm.password)}}
+
+            {{form_end(registrationForm)}}
+        </form>
+    </div>
+
+{% endblock %}
