@@ -4,15 +4,21 @@
 
 {% block main %}
 
-    <div class="container">
+
+    <fieldset class="mt-5 pt-5 mb-auto">
+        <legend class="mb-5">Rejoignez-nous en remplissant le formulaire ci-dessous :</legend>
         <form method="post">
+
             {{form_start(registrationForm)}}
 
                 {{form_row(registrationForm.username)}}
                 {{form_row(registrationForm.password)}}
 
+                <button class="btn btn-primary mt-5">Valider</button>
+
             {{form_end(registrationForm)}}
+
         </form>
-    </div>
+    </fieldset>
 
 {% endblock %}

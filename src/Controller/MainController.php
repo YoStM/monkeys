@@ -39,7 +39,8 @@ class MainController extends AbstractController
 
         if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
             $hashed = $encoder->encodePassword($user, $user->getPassword());
-
+            $user->setPassword($hashed);
+            $user->setRoles(['ROLE_USER']);
             $emi->persist($user);
             $emi->flush();
 
