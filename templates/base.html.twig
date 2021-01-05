@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+        
         <meta charset="UTF-8"/>
         <meta name="description" content="Freelancers forum and more"/>
         <meta name="keywords" content="digital, web, developpers, designers, freelancers, freelance, projects, contracts"/>
         <meta name="author" content="YoStM"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        {# Title which will be displayed on each and every pages #}
         <title>{% block title %}Little Monkeys |{% endblock %}</title>
+
+        {# Favicon #}
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+
+        {# CDN Bootstrap 4.5.3 #}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
                 integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
+        {# Bootstrap icons #}
+        <link rel="stylesheet" href="{{asset('css/bootstrap-icons.css')}}">
+        {# Google font Comfortaa 300, 500, 700 #}
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap" rel="stylesheet"/>
+        {# Custom css #}
         <link rel="stylesheet" href="{{asset('css/styles.css')}}"/>
-        {% block stylesheets %}{% endblock %}
+        
+        {% block stylesheets %}
+        
+        {% endblock %}
+
     </head>
 
     <body>
+
+        {# Top NavBar #}
         {% include "inc/topnavbar.html.twig" %}
-        {% block body %}{% endblock %}
+
+        {# Main tag where all the content fits #}
+        <main class="container">
+        {% block main %}
+        
+        {% endblock %}
+        </main>
+
+        {# Footer for each and every pages #}
+        <footer class="container">
+        
+        </footer>
+
+        {# Bootstrap's Javascript #}
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
                 integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
                 integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        {% block javascripts %}{% endblock %}
+        
+        {# Custom javascript #}
+        {% block javascripts %}
+        
+        {% endblock %}
 
     </body>
 </html>
