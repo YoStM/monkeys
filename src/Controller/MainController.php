@@ -46,7 +46,7 @@ class MainController extends AbstractController
 
             $this->addFlash('success', 'Félicitations ! Vous êtes maintenant membre de notre troupe de petit ouistiti. Encore quelques informations à nous confier et vous pourrez enfin travailler avec vos semblables.');
 
-            $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('main_home');
         }
 
         return $this->render('main/registration.html.twig', [
