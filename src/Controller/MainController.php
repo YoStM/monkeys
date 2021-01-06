@@ -70,7 +70,6 @@ class MainController extends AbstractController
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($id);
-        dump($user);
         $userProfile = new UserProfile();
 
         $registrationStepTwo = $this->createForm(UserProfileType::class, $userProfile);
@@ -104,8 +103,54 @@ class MainController extends AbstractController
         $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
         $userProfile = $userProfileRepo->findUserProfileByUserId($user->getId());
 
-
         return $this->render('main/myProfile.html.twig', [
+            'user' => $user,
+            'userProfile' => $userProfile
+        ]);
+    }
+
+    /**
+     * This function is triggered from the "My profile" page when the user clicks on "Modify"
+     * The User is redirected to another view that allows him to change the data stored on his profile
+     * 
+     * @Route("/profil-maj/{id}", name="main_myProfileUpdate")
+     */
+    public function updateProfil($id, Request $req, EntityManagerInterface $emi): Response
+    {
+        $user = $this->getUser();
+        $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
+        $userProfile = $userProfileRepo->findUserProfileByUserId($user->getId());
+
+        $name = isset($_POST['submit']);
+        dump($name);
+
+        if (isset($_POST['submit'])) {
+            $email = $_POST["email"];
+            $firstName = $_POST["firstName"];
+            $lastName = $_POST["lastName"];
+            $companyName = $_POST["companyName"];
+            $siret = $_POST["siret"];
+            $activity = $_POST["activity"];
+            $aboutUser = $_POST["aboutUser"];
+
+            $userProfile->setEmail($email);
+            $userProfile->setFirstName($firstName);
+            $userProfile->setLastName($lastName);
+            $userProfile->setCompanyName($companyName);
+            $userProfile->setSiret($siret);
+            $userProfile->setActivity($activity);
+            $userProfile->setAboutUser($aboutUser);
+
+            dump($userProfile);
+            $emi->persist($userProfile);
+            $emi->flush();
+
+            $this->addFlash('success', 'Les informations ont bien été mise à jour !');
+
+            $this->redirectToRoute('main_myProfile');
+        }
+
+        return $this->render('main/myProfileUpdate.html.twig', [
             'user' => $user,
             'userProfile' => $userProfile
         ]);
