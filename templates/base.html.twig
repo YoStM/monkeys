@@ -63,6 +63,17 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
                 integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         
+        <script type="text/javascript">
+            const CURRENT_LOCATION = location.href;
+            const MENU_ITEM = document.querySelectorAll('nav div a');
+            const MENU_LENGTH = MENU_ITEM.length;
+
+            for(let i=0;i<MENU_LENGTH;i++) {
+                if(MENU_ITEM[i].href === CURRENT_LOCATION) {
+                    MENU_ITEM[i].className = "nav-link active"
+                }
+            }
+        </script>
         {# Custom javascript #}
         {% block javascripts %}
         

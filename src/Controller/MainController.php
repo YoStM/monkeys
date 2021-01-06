@@ -91,4 +91,23 @@ class MainController extends AbstractController
             'registrationStepTwo' => $registrationStepTwo->createview()
         ]);
     }
+
+    /**
+     * This function redirect the user to his personnal information page
+     * In this page he can review all the data that is stored about himself and update or delete the data.
+     * 
+     * @Route("/profil", name="main_myProfile")
+     */
+    public function myProfile(): Response
+    {
+        $user = $this->getUser();
+        $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
+        $userProfile = $userProfileRepo->findUserProfileByUserId($user->getId());
+
+
+        return $this->render('main/myProfile.html.twig', [
+            'user' => $user,
+            'userProfile' => $userProfile
+        ]);
+    }
 }
