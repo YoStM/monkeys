@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Inscription{% endblock %}
+
+{% block main %}
+
+<div class="col-md-8 mt-5 p-5">
+<form method="post">
+    <fieldset class="pt-5 mb-auto">
+        <legend class="mb-1">Nous avons besoin de quelques informations importantes :</legend>
+        
+
+            {{form_start(registrationStepTwo)}}
+
+                {{form_row(registrationStepTwo.firstName)}}
+                {{form_row(registrationStepTwo.lastName)}}
+                {{form_row(registrationStepTwo.companyName)}}
+                {{form_row(registrationStepTwo.email)}}
+                {{form_row(registrationStepTwo.siret)}}
+                {{form_row(registrationStepTwo.activity)}}
+                {{form_row(registrationStepTwo.aboutUser)}}
+
+
+                <button class="btn btn-primary mt-1" type="submit">Valider</button>
+
+            {{form_end(registrationStepTwo)}}
+
+    </fieldset>
+</form>
+</div>
+
+{% endblock %}
