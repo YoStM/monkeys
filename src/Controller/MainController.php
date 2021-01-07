@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserProfile;
-use App\Form\RegistrationType;
 use App\Form\UserProfileType;
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class MainController extends AbstractController
@@ -160,6 +162,59 @@ class MainController extends AbstractController
             'user' => $user,
             'userProfile' => $userProfile,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * This function allows the user to modify his password
+     * 
+     * @Route("/mdp_maj/{id}", name="main_passwordUpdate")
+     * 
+     * @param [type] $id
+     * @param Request $req
+     * @return Response
+     */
+    public function updateCredentials($id, Request $req, UserPasswordEncoderInterface $encoder): Response
+    {
+
+        $user = $this->getUser();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $userRepo->find($id);
+
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        $form = $this->createFormBuilder($user)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent être identiques',
+                'required' => true,
+                'first_options' => array('label' => 'Mot de passe :'),
+                'second_options' => array('label' => 'Répéter mot de passe :'),
+            ])
+            ->getForm();
+        $form->handleRequest($req);
+
+        $currentPassword = $this->createFormBuilder($user)
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe actuel :'
+            ])
+            ->getForm();
+        $currentPassword->handleRequest($req);
+
+        dump($user->getPassword());
+
+        if ($user->getId() === $userRepo && $form->isSubmitted()) {
+
+            $hashed = $encoder->encodePassword($user, $user->getPassword());
+            dump($hashed);
+            $user->setPassword($hashed);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+        return $this->render('main/passwordUpdate.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+            'currentPassword' => $currentPassword->createView()
         ]);
     }
 }

@@ -29,7 +29,7 @@
             </table>
         </fieldset>
         <div class="align-self-lg-end"> {# find a way to display this button on the same line with the other button further down #}
-        <a href="#" id="passwordupdate" type="submit" class="btn btn-primary">Modifier mot de passe</a>
+        <a href="{{path('main_passwordUpdate', {'id': user.id})}}" id="passwordupdate" type="submit" class="btn btn-primary">Modifier mot de passe</a>
         </div>
         </div>
 
