@@ -5,3 +5,24 @@ body {
     margin: 0px;
     padding: 0px;
 }
+
+
+textarea {
+    border: white;
+    resize: none;
+}
+
+textarea:disabled {
+    background-color: white;
+    color: black;
+}
+
+tr {
+    height: 50px;
+}
+
+.form-group .form-control {
+    border: white;
+    border-bottom: 1px solid #E7E8E9;
+    width: fit-content;
+}

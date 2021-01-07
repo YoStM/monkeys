@@ -4,60 +4,90 @@
 
 {% block main %}
 
-<form action="{{ path('main_myProfile') }}" method="POST">
+<div class="pt-5 pb-3">
+    <h1>Mise à jour de mon profil</h1>
+</div>
 
-    <div class="mt-5 pt-5 row">
-        <div class="col-5">
-        <fieldset>
-        <legend class="mb-3">Vos identifiants :</legend>
-            <div class="form-group">
-            <label for="inputUsername">Username :</label>
-            <input type="text" value="{{ user.username }}" name="username" id="inputUsername" class="form-control" required disabled />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Mot de passe :</label>
-            <input type="password" value="{{ user.password }}" name="password" id="inputPassword" class="form-control" required disabled />
-            </div>
-            <button class="btn btn-primary" type="button">Changer le mot de passe</button>
-        </fieldset>
+    <div class="row">
+        <div class="mt-1 mb-1 ml-auto p-5 col-lg-5">
+        <form method="post">
+            <fieldset>
+            <legend class="mb-5">Vos identifiants :</legend>
+                <div class="form-group">
+                <label for="inputUsername">Username :</label>
+                <input type="text" value="{{ user.username }}" name="username" id="inputUsername" class="form-control" required disabled />
+                </div>
+                <div class="form-group">
+                <label for="inputPassword">Mot de passe :</label>
+                <input type="password" value="{{ user.password }}" name="password" id="inputPassword" class="form-control" required disabled />
+                </div>
+                <button class="btn btn-primary" type="button">Changer le mot de passe</button>
+            </fieldset>
+        </form>
         </div>
 
-        <div class="offset-2 col-5">
-        <fieldset id="PersonalInfo">
-        <legend class="mb-3">Vos informations personnelles :</legend>
-            <div class="form-group">
-            <label for="inputUsername">Email :</label>
-            <input type="text" value="{{ userProfile.email }}" name="email" id="inputEmail" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Prénom :</label>
-            <input type="text" value="{{ userProfile.firstName }}" name="firstName" id="inputFirstName" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Nom :</label>
-            <input type="text" value="{{ userProfile.lastName }}" name="lastName" id="inputLastName" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Nom de la société :</label>
-            <input type="text" value="{{ userProfile.companyName }}" name="companyName" id="inputCompanyName" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Numéro de siret :</label>
-            <input type="text" value="{{ userProfile.siret }}" name="siret" id="inputSiret" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Profession :</label>
-            <input type="text" value="{{ userProfile.activity }}" name="activity" id="inputActivity" class="form-control" required />
-            </div>
-            <div class="form-group">
-            <label for="inputPassword">Ma personnalité :</label>
-            <input type="text" value="{{ userProfile.aboutUser }}" name="aboutUser" id="inputAboutUser" class="form-control" required />
-            </div>
-            <button type="submit" class="btn btn-primary mt-1" id="updatebtn" name="submit">Valider les changements !</button>
-        </fieldset>
+        <div class="mt-1 mb-1 mr-auto p-5 col-lg-5">
+        <form method="post">
+            {{form_start(form)}}
+                <fieldset id="PersonalInfo">
+                
+                <legend class="mb-5">Vos informations personnelles :</legend>
+                    <div class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.email)}}
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <label for="firstName" class="col-sm-4 col-form-label">Prénom :</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.firstName)}}
+                    </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                    <label for="lastName" class="col-sm-4 col-form-label">Nom :</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.lastName)}}
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <label for="companyName" class="col-sm-4 col-form-label">Société :</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.companyName)}}
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <label for="siret" class="col-sm-4 col-form-label">Siret :</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.siret)}}
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <label for="activity" class="col-sm-4 col-form-label">Profession&nbsp;:</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.activity)}}
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <label for="aboutUser" class="col-sm-4 col-form-label">Mon&nbsp;Univers&nbsp;:</label>
+                    <div class="col-sm-8">
+                    {{form_widget(form.aboutUser)}}
+                    </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-1" id="updatebtn" name="submit">Valider les changements !</button>
+                    
+                </fieldset>
+            {{form_end(form)}}
+        </form>
         </div>
     </div>
-</form>
 
 {% endblock %}
 

@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class MainController extends AbstractController
@@ -115,44 +118,48 @@ class MainController extends AbstractController
      * 
      * @Route("/profil-maj/{id}", name="main_myProfileUpdate")
      */
-    public function updateProfil($id, Request $req, EntityManagerInterface $emi): Response
+    public function updateProfil($id, Request $req): Response
     {
         $user = $this->getUser();
         $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
         $userProfile = $userProfileRepo->findUserProfileByUserId($user->getId());
 
-        $name = isset($_POST['submit']);
-        dump($name);
+        if (!$userProfile) {
+            throw $this->createNotFoundException('There are no user profil with the following id: ' . $id);
+        }
 
-        if (isset($_POST['submit'])) {
-            $email = $_POST["email"];
-            $firstName = $_POST["firstName"];
-            $lastName = $_POST["lastName"];
-            $companyName = $_POST["companyName"];
-            $siret = $_POST["siret"];
-            $activity = $_POST["activity"];
-            $aboutUser = $_POST["aboutUser"];
+        $form = $this->createFormBuilder($userProfile)
+            ->add('email', EmailType::class)
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('companyName', TextType::class)
+            ->add('siret', TextType::class)
+            ->add('activity', TextType::class)
+            ->add('aboutUser', TextareaType::class, [
+                'attr' => [
+                    'rows' => 7,
+                    'cols' => 35
+                ],
+                'label' => 'Ma personalité :'
+            ])
+            ->getForm();
 
-            $userProfile->setEmail($email);
-            $userProfile->setFirstName($firstName);
-            $userProfile->setLastName($lastName);
-            $userProfile->setCompanyName($companyName);
-            $userProfile->setSiret($siret);
-            $userProfile->setActivity($activity);
-            $userProfile->setAboutUser($aboutUser);
+        $form->handleRequest($req);
 
-            dump($userProfile);
-            $emi->persist($userProfile);
-            $emi->flush();
+        if ($form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $userProfile = $form->getData();
+            $em->flush();
 
             $this->addFlash('success', 'Les informations ont bien été mise à jour !');
 
-            $this->redirectToRoute('main_myProfile');
+            return $this->redirectToRoute('main_myProfile');
         }
 
         return $this->render('main/myProfileUpdate.html.twig', [
             'user' => $user,
-            'userProfile' => $userProfile
+            'userProfile' => $userProfile,
+            'form' => $form->createView()
         ]);
     }
 }

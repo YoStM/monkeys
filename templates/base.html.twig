@@ -39,21 +39,21 @@
         {# Displays flash messages whenever there is message to display #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{label}}">
+                <div id="flashMessage" class="alert alert-{{label}}">
                     {{message}}
                 </div>
             {% endfor %}
         {% endfor %}
 
         {# Main tag where all the content fits #}
-        <main class="container">
+        <main class="container-fluid">
         {% block main %}
         
         {% endblock %}
         </main>
 
         {# Footer for each and every pages #}
-        <footer class="container">
+        <footer class="container-fluid">
         
         </footer>
 
