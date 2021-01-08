@@ -165,7 +165,7 @@ class UserController extends AbstractController
      * @param Request $req
      * @return Response
      */
-    public function updatePassword($id, Request $req, UserPasswordEncoderInterface $encoder): Response
+    public function updatePassword($id, Request $req, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $userloggedIn = $this->getUser();
         $userRepo = $this->getDoctrine()->getRepository(User::class);
@@ -184,9 +184,9 @@ class UserController extends AbstractController
 
         $form->handleRequest($req);
 
-
         if ($userloggedIn && $userloggedIn->getId() === (int) $id && $form->isSubmitted()) {
             dump($req->request);
+            dump($passwordEncoder->comparePasswords($user->getPassword(), $req->request->get('previousPassword')));
         }
 
 
