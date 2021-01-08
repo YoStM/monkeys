@@ -7,17 +7,20 @@ use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\UserProfileType;
 use App\Form\RegistrationType;
+use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use ContainerAMiwRxX\getUserPasswordEncoderService;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -91,7 +94,7 @@ class UserController extends AbstractController
      * This function redirect the user to his personnal information page
      * In this page he can review all the data that is stored about himself and update or delete the data.
      * 
-     * @Route("/profil", name="user_myProfile")
+     * @Route("/profil", name="user_profile")
      */
     public function myProfile(): Response
     {
@@ -165,32 +168,43 @@ class UserController extends AbstractController
      * @param Request $req
      * @return Response
      */
-    public function updatePassword($id, Request $req, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function updatePassword($id, Request $req, EncoderFactoryInterface $encoder): Response
     {
         $userloggedIn = $this->getUser();
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userRepo->findOneBy(['id' => $id]);
+        $user = $userRepo->find($id);
 
-        $form = $this->createFormBuilder($user)
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe doivent être identiques',
-                'required' => true,
-                'first_options' => array('label' => ''),
-                'second_options' => array('label' => '')
-
-            ])
-            ->getForm();
+        $form = $this->createForm(ResetPasswordType::class, $user);
+        $form->getData();
 
         $form->handleRequest($req);
 
-        if ($userloggedIn && $userloggedIn->getId() === (int) $id && $form->isSubmitted()) {
-            dump($req->request);
-            dump($passwordEncoder->comparePasswords($user->getPassword(), $req->request->get('previousPassword')));
+
+        if ($userloggedIn && $userloggedIn->getId() === (int) $id && $form->isSubmitted() && $form->isValid()) {
+            $previousPassword = $req->request->get('previousPassword');
+            $passwordEncoder = $encoder->getEncoder($userloggedIn);
+
+            if (!$passwordEncoder->isPasswordValid($user->getPassword(), $previousPassword, "bcrypt")) {
+                $this->addFlash('warning', 'Merci de resaisir les mots de passes. La validation a échoué !');
+            } else {
+                $newPassword = $form->get('password')->getData();
+                $hashed = $passwordEncoder->encodePassword($newPassword, "bcrypt");
+                $user->setPassword($hashed);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('success', 'Votre mot de passe a bien été mis à jour !');
+
+                $this->redirectToRoute('user_profile');
+            }
         }
 
 
+
+
         return $this->render('user/updatePassword.html.twig', [
+            'user' => $user,
             'form' => $form->createView()
         ]);
     }
