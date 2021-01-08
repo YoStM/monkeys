@@ -131,7 +131,6 @@ class MainController extends AbstractController
         }
 
         $form = $this->createFormBuilder($userProfile)
-            ->add('email', EmailType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('companyName', TextType::class)

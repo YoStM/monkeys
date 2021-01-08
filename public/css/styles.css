@@ -1,11 +1,10 @@
 body {
 
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Comfortaa', 'Brush Script MT', cursive;
 
     margin: 0px;
     padding: 0px;
 }
-
 
 textarea {
     border: white;

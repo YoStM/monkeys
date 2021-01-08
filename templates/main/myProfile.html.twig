@@ -4,81 +4,91 @@
 
 {% block main %}
 
-<div class="pt-5 pb-3">
+<div class="offset-lg-1 pt-5 pb-3">
 <h1>Mon Profil</h1>
 </div>
 
-    <div class="row">
-        
-        <div class="mt-1 mb-1 ml-auto p-5 col-lg-5">
-        <fieldset>
-        <legend class="mb-5">Vos identifiants :</legend>
-            <table class="table table-borderless">
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Username :</td>
-                        <td>{{user.username}}</td>
-                    </tr>
-                    <tr>
-                        <td>Mot de passe :</td>
-                        <td>******</td>
-                    </tr>
-                </tbody>
-            </table>
-        </fieldset>
-        <div class="align-self-lg-end"> {# find a way to display this button on the same line with the other button further down #}
-        <a href="{{path('main_passwordUpdate', {'id': user.id})}}" id="passwordupdate" type="submit" class="btn btn-primary">Modifier mot de passe</a>
+<div class="row">
+    
+    <div class="mt-1 mb-1 ml-auto col-lg-5">
+    <fieldset>
+    <legend class="mb-5">Vos identifiants&nbsp;:</legend>
+    {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+        <div style="overflow-x:auto">
+        <table class="table table-borderless">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Username :</td>
+                    <td>{{user.username}}</td>
+                </tr>
+                <tr>
+                    <td>Mot de passe :</td>
+                    <td>******</td>
+                </tr>
+            </tbody>
+        </table>
         </div>
-        </div>
-
-        <div class="mt-1 mb-1 mr-auto p-5 col-lg-5">
-        <fieldset id="PersonalInfo">
-        <legend class="mb-5">Vos informations personnelles :</legend>
-            <table class="table table-borderless">
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Email :</td>
-                        <td>{{userProfile.email}}</td>
-                    </tr>
-                    <tr>
-                        <td>Prénom :</td>
-                        <td>{{userProfile.firstName}}</td>
-                    </tr>
-                    <tr>
-                        <td>Nom :</td>
-                        <td>{{userProfile.lastName}}</td>
-                    </tr>
-                    <tr>
-                        <td>Société :</td>
-                        <td>{{userProfile.companyName}}</td>
-                    </tr>
-                    <tr>
-                        <td>Siret :</td>
-                        <td>{{userProfile.siret}}</td>
-                    </tr>
-                    <tr>
-                        <td>Profession&nbsp;:</td>
-                        <td>{{userProfile.activity}}</td>
-                    </tr>
-                    <tr>
-                        <td>Mon&nbsp;univers&nbsp;:</td>
-                        <td>{{userProfile.aboutUser}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-        </fieldset>
-        <div class="justify-items-lg-start">
-        <a href="{{path('main_myProfileUpdate', {'id': user.id})}}" id="updatebtn" class="btn btn-primary" type="submit">Modifier informations</a>
-        </div>
-        </div>
-        
+    </fieldset>
     </div>
-</form>
+
+    <div class="mt-1 mb-1 mr-auto col-lg-5">
+    <fieldset id="PersonalInfo">
+    <legend class="mb-5">Vos informations personnelles&nbsp;:</legend>
+    {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+        <div style="overflow-x:auto"> 
+        <table class="table table-borderless">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Email :</td>
+                    <td>{{userProfile.email}}</td>
+                </tr>
+                <tr>
+                    <td>Prénom :</td>
+                    <td>{{userProfile.firstName}}</td>
+                </tr>
+                <tr>
+                    <td>Nom :</td>
+                    <td>{{userProfile.lastName}}</td>
+                </tr>
+                <tr>
+                    <td>Société :</td>
+                    <td>{{userProfile.companyName}}</td>
+                </tr>
+                <tr>
+                    <td>Siret :</td>
+                    <td>{{userProfile.siret}}</td>
+                </tr>
+                <tr>
+                    <td>Profession&nbsp;:</td>
+                    <td>{{userProfile.activity}}</td>
+                </tr>
+                <tr>
+                    <td>Mon&nbsp;univers&nbsp;:</td>
+                    <td>{{userProfile.aboutUser}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </fieldset>
+    </div>
+    
+</div>
+<div class="row">
+<div class="mt-1 mb-1 ml-auto col-lg-5">
+<div class="d-flex justify-content-start">
+        <a href="{{path('main_passwordUpdate', {'id': user.id})}}" id="passwordupdate" type="submit" class="btn btn-primary">Modifier mot de passe</a>
+</div>
+</div>
+<div class="mt-1 mb-1 mr-auto col-lg-5">
+<div class="d-flex justify-content-start">
+    <a href="{{path('main_myProfileUpdate', {'id': user.id})}}" id="updatebtn" class="btn btn-primary" type="submit">Modifier informations</a>
+</div>
+</div>
+</div>
 
 {% endblock %}
 
