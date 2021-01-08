@@ -3,7 +3,7 @@
 {% if app.user == NULL %}
 
     <nav class="navbar navbar-dark bg-secondary navbar-expand-lg">
-        <a href="#" class="navbar-brand">Little-Monkeys</a>
+        <a href="{{path('main_home')}}" class="navbar-brand">Little-Monkeys</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav ml-auto">
                 <a href="#" class="nav-link">Annuaire</a>
-                <a href="{{path('main_registration')}}" class="nav-link">S'enregistrer</a>
+                <a href="{{path('user_registration')}}" class="nav-link">S'enregistrer</a>
                 <a href="{{path('app_login')}}" class="nav-link">Se connecter</a>
             </div>
         </div>
@@ -20,14 +20,14 @@
 {% else %}
     
     <nav class="navbar navbar-dark bg-secondary navbar-expand-lg">
-        <a href="#" class="navbar-brand">Little-Monkeys</a>
+        <a href="{{path('main_home')}}" class="navbar-brand">Little-Monkeys</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportContent" aria-controls="navbarSupportContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportContent">
             <div class="navbar-nav ml-auto">
                 <a href="#" class="nav-link">Créer un projet</a>
-                <a href="{{path('main_myProfile')}}" class="nav-link">Mon profil</a>
+                <a href="{{path('user_myProfile')}}" class="nav-link">Mon profil</a>
                 <a href="#" class="nav-link">Mes offres</a>
                 <a href="#" class="nav-link">Mes projets</a>
                 <a href="#" class="nav-link">Annuaire</a>
