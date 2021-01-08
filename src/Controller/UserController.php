@@ -8,11 +8,11 @@ use App\Entity\UserProfile;
 use App\Form\UserProfileType;
 use App\Form\RegistrationType;
 use App\Form\ResetPasswordType;
+use App\Form\UpdateProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use ContainerAMiwRxX\getUserPasswordEncoderService;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -124,20 +124,7 @@ class UserController extends AbstractController
             throw $this->createNotFoundException('There are no user profil with the following id: ' . $id);
         }
 
-        $form = $this->createFormBuilder($userProfile)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('companyName', TextType::class)
-            ->add('siret', TextType::class)
-            ->add('activity', TextType::class)
-            ->add('aboutUser', TextareaType::class, [
-                'attr' => [
-                    'rows' => 7,
-                    'cols' => 35
-                ],
-                'label' => 'Ma personalité :'
-            ])
-            ->getForm();
+        $form = $this->createForm(UpdateProfileType::class, $userProfile);
 
         $form->handleRequest($req);
 
@@ -149,7 +136,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Les informations ont bien été mise à jour !');
 
-            return $this->redirectToRoute('user_myProfile');
+            return $this->redirectToRoute('user_profile');
         }
 
         return $this->render('user/updateProfile.html.twig', [
