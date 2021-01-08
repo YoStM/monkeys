@@ -196,7 +196,7 @@ class UserController extends AbstractController
 
                 $this->addFlash('success', 'Votre mot de passe a bien été mis à jour !');
 
-                $this->redirectToRoute('user_profile');
+                return $this->redirectToRoute('user_profile');
             }
         }
 
