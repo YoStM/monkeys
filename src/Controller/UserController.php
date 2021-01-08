@@ -141,6 +141,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $userProfile = $form->getData();
+            $em->persist($userProfile);
             $em->flush();
 
             $this->addFlash('success', 'Les informations ont bien été mise à jour !');
@@ -166,9 +167,31 @@ class UserController extends AbstractController
      */
     public function updatePassword($id, Request $req, UserPasswordEncoderInterface $encoder): Response
     {
+        $userloggedIn = $this->getUser();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->findOneBy(['id' => $id]);
+
+        $form = $this->createFormBuilder($user)
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe doivent être identiques',
+                'required' => true,
+                'first_options' => array('label' => ''),
+                'second_options' => array('label' => '')
+
+            ])
+            ->getForm();
+
+        $form->handleRequest($req);
 
 
+        if ($userloggedIn && $userloggedIn->getId() === (int) $id && $form->isSubmitted()) {
+            dump($req->request);
+        }
 
-        return $this->render('user/updatePassword.html.twig');
+
+        return $this->render('user/updatePassword.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

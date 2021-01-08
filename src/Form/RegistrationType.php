@@ -24,7 +24,7 @@ class RegistrationType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent être identiques',
                 'required' => true,
                 'first_options' => array('label' => 'Mot de passe :'),
-                'second_options' => array('label' => 'Répéter mot de passe :'),
+                'second_options' => array('label' => 'Répéter mot de passe :')
 
             ])
             //->add('roles')
