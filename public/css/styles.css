@@ -20,6 +20,10 @@ tr {
     height: 50px;
 }
 
+.toUppercase {
+    text-transform: uppercase;
+}
+
 .form-group .form-control {
     border: white;
     border-bottom: 1px solid #E7E8E9;

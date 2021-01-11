@@ -89,7 +89,7 @@ class UserController extends AbstractController
      * This function redirect the user to his personnal information page
      * In this page he can review all the data that is stored about himself and update or delete the data.
      * 
-     * @Route("/profil", name="user_profile")
+     * @Route("/profil", name="user_ownProfile")
      */
     public function myProfile(): Response
     {
@@ -131,7 +131,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Les informations ont bien été mise à jour !');
 
-            return $this->redirectToRoute('user_profile');
+            return $this->redirectToRoute('user_ownProfile');
         }
 
         return $this->render('user/updateProfile.html.twig', [
@@ -178,7 +178,7 @@ class UserController extends AbstractController
 
                 $this->addFlash('success', 'Votre mot de passe a bien été mis à jour !');
 
-                return $this->redirectToRoute('user_profile');
+                return $this->redirectToRoute('user_ownProfile');
             }
         }
 
@@ -191,7 +191,7 @@ class UserController extends AbstractController
     /**
      * This function redirect the user to the page that displays
      * the users directory (registry)
-     * @Route("/Annuaire", name="user_usersDirectory")
+     * @Route("/annuaire", name="user_usersDirectory")
      * @return Response
      */
     public function usersDirectory(): Response
@@ -201,6 +201,24 @@ class UserController extends AbstractController
 
         return $this->render('user/usersDirectory.html.twig', [
             'usersDirectory' => $usersDirectory
+        ]);
+    }
+
+    /**
+     * Displays the user profile of a freelancer
+     * Only the relevant information are available on this page
+     * (firstname, lastname, companyname, email, siret, activity and abourUser)
+     *
+     * @Route("/Profil-freelance/{freelanceUsername}", name="user_freelanceDetails")
+     * @return Response
+     */
+    public function freelanceDetails($freelanceUsername): Response
+    {
+        $freelanceRepo = $this->getDoctrine()->getRepository(User::class);
+        $freelanceDetails = $freelanceRepo->findOneBy(['username' => $freelanceUsername]);
+
+        return $this->render('user/freelanceDetails.html.twig', [
+            'freelanceDetails' => $freelanceDetails
         ]);
     }
 }
