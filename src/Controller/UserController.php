@@ -182,12 +182,25 @@ class UserController extends AbstractController
             }
         }
 
-
-
-
         return $this->render('user/updatePassword.html.twig', [
             'user' => $user,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * This function redirect the user to the page that displays
+     * the users directory (registry)
+     * @Route("/Annuaire", name="user_usersDirectory")
+     * @return Response
+     */
+    public function usersDirectory(): Response
+    {
+        $userProfileRepo = $this->getDoctrine()->getRepository(UserProfile::class);
+        $usersDirectory = $userProfileRepo->findAll();
+
+        return $this->render('user/usersDirectory.html.twig', [
+            'usersDirectory' => $usersDirectory
         ]);
     }
 }
