@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | Créer un projet{% endblock %}
+
+{% block main %}
+
+<div class="text-center pt-5 pb-3">
+<h1>Publication</h1>
+</div>
+
+<div class="col-6 mt-3 p-5 ml-auto mr-auto">
+<form method="post">
+    <fieldset class="pt-5 mb-auto">
+        <legend class="text-center mb-3">Présentez-nous votre projet en quelques mots&nbsp;:</legend>
+
+            {{form_start(projectForm)}}
+
+                {{form_row(projectForm.title)}}
+                {{form_row(projectForm.description)}}
+
+                <button class="btn btn-primary mt-1" type="submit">Publier le projet</button>
+
+            {{form_end(projectForm)}}
+
+    </fieldset>
+</form>
+</div>
+
+{% endblock %}
