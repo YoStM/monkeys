@@ -28,12 +28,12 @@ class Project
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $createDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $modifyDate;
 
