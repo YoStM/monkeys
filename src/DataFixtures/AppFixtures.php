@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
 
         $date = date_create("now", new DateTimeZone("Europe/Paris"));
         $interval = 1;
-        $interval2 = 3;
+        $interval2 = 2;
         $projectNbr = 1;
 
         $category = new Category();
@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
 
-            $interval3 = $interval2 * $i;
+            $interval3 = $interval * $i;
 
             $project = new Project();
             $project->setCategoryId($category2);
@@ -89,6 +89,7 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 0; $i < 5; $i++) {
+
             $interval3 = $interval2 * $i;
 
             $project = new Project();

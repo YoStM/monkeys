@@ -19,12 +19,17 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+    /**
+     * This function generate a query and return the array of new projects
+     *
+     * @return void
+     */
     public function findNewProjects()
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.active = true')
-            ->orderBy('p.createDate', 'DESC')
-            ->setMaxResults(10)
+            ->orderBy('p.createDate', 'ASC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
@@ -34,20 +39,25 @@ class ProjectRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $psql = "
-                SELECT * FROM project
-                WHERE create_date < CURRENT_TIMESTAMP - INTERVAL '240 hours'
+                SELECT p.title, p.category_id_id, p.description, p.active, p.user_id_id, u.username, up.company_name, c.label FROM project AS \"p\"
+                JOIN \"user\" AS \"u\" ON u.id = p.user_id_id
+                JOIN user_profile AS \"up\" ON up.user_id_id = p.user_id_id
+                JOIN \"category\" AS \"c\" ON c.id = p.category_id_id
+                WHERE p.active = true
+                AND create_date > CURRENT_TIMESTAMP - INTERVAL '21 days'
                 ORDER BY create_date DESC
+                LIMIT 5;
                 ";
 
         $stmt = $conn->prepare($psql);
         $stmt->execute();
 
         return $stmt->fetchAllAssociative();
-
+        // $nbrOfDays = 15;
         // return $this->createQueryBuilder('p')
-        //     ->andWhere('p.createDate > p.createDate + INTERVAL 10 days')
+        //     ->andWhere("p.createDate > AGE(p.createDate + 15) ")
         //     ->orderBy('p.createDate', 'ASC')
-        //     ->setMaxResults(15)
+        //     ->setMaxResults(5)
         //     ->getQuery()
         //     ->getResult();
     }
