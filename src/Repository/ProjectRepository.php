@@ -39,7 +39,8 @@ class ProjectRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $psql = "
-                SELECT p.title, p.category_id_id, p.description, p.active, p.user_id_id, u.username, up.company_name, c.label FROM project AS \"p\"
+                SELECT p.title, p.category_id_id, p.description, p.active, p.user_id_id, u.username, up.company_name, c.label 
+                FROM project AS \"p\"
                 JOIN \"user\" AS \"u\" ON u.id = p.user_id_id
                 JOIN user_profile AS \"up\" ON up.user_id_id = p.user_id_id
                 JOIN \"category\" AS \"c\" ON c.id = p.category_id_id
@@ -53,13 +54,44 @@ class ProjectRepository extends ServiceEntityRepository
         $stmt->execute();
 
         return $stmt->fetchAllAssociative();
-        // $nbrOfDays = 15;
-        // return $this->createQueryBuilder('p')
-        //     ->andWhere("p.createDate > AGE(p.createDate + 15) ")
-        //     ->orderBy('p.createDate', 'ASC')
-        //     ->setMaxResults(5)
-        //     ->getQuery()
-        //     ->getResult();
+    }
+
+    public function getPaginatedProjects(int $page, int $length)
+    {
+        $queryBuilder = $this->createQueryBuilder("p")
+            ->orderBy("p.createDate", "desc")
+            ->setFirstResult(($page - 1) * $length)
+            ->setMaxResults($length);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function countActiveProjects()
+    {
+        return $this->createQueryBuilder("p")
+            ->select("count(p.id)")
+            ->getQuery()
+            ->getScalarResult();
+    }
+
+    public function getOwnProjects(int $id)
+    {
+        return $this->createQueryBuilder("p")
+            ->andWhere("p.UserId = :id")
+            ->setParameter("id", $id)
+            ->orderBy("p.createDate", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getProjectOwner()
+    {
+        return $this->createQueryBuilder("p")
+            ->join("p.UserId", "u")
+            ->Where("p.UserId = u.id")
+            ->orderBy("p.createDate", "DESC")
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

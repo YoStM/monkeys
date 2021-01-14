@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateTimeZone;
 use App\Entity\Project;
 use App\Form\CreateProjectType;
-use DateTime;
+use App\Form\UpdateProjectType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectController extends AbstractController
 {
@@ -45,7 +47,7 @@ class ProjectController extends AbstractController
 
     /**
      * 
-     * @Route("/projet/{id}", name="project_details")
+     * @Route("/details_projet/{id}", name="project_details")
      */
     public function details($id): Response
     {
@@ -54,6 +56,41 @@ class ProjectController extends AbstractController
 
         return $this->render('project/details.html.twig', [
             'project' => $project
+        ]);
+    }
+
+    /**
+     * Allows the user to modify and update his project
+     *
+     * @Route("/modifier_projet/{id}",  name="project_update", requirements={"id"="\d+"})
+     * @param [type] $id
+     * @param Request $req
+     * @param EntityManagerInterface $emi
+     * @return void
+     */
+    public function update($id, Request $req, EntityManagerInterface $emi): Response
+    {
+
+        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
+        $projectToUpdate = $projectRepo->find($id);
+
+        $form = $this->createForm(UpdateProjectType::class);
+        $form->handleRequest($req);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $project = $form->getData();
+            $date = date_create("now", new DateTimeZone("Europe/Paris"));
+            $project->setModifyDate($date);
+            $emi->persist($project);
+            $emi->flush();
+
+            $this->addFlash('Success', 'La modification de votre projet a bien été enregistrée !');
+
+            $this->redirectToRoute('project_details');
+        }
+
+        return $this->render('project/update.html.twig', [
+            'project' => $projectToUpdate
         ]);
     }
 }

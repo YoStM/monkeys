@@ -63,7 +63,7 @@
                 {% for project in newProjects %}
                     
                     <tr>
-                        <td><a href="#{#{{path('user_freelanceDetails', {'freelanceUsername': project.user_id_id.username})}}#}">{{project.userId.userProfile.companyName}}</a></td>
+                        <td><a href="{{path('user_freelanceDetails', {'freelanceUsername': project.userId.username})}}">{{project.userId.userProfile.companyName}}</a></td>
                         <td><a href="{{path('project_details', {'id': project.id})}}">{{project.title}}</a></td>
                         <td>{{project.categoryId.label}}</td>
                     </tr>

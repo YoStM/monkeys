@@ -22,7 +22,7 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'projects' => $projects,
             'newProjects' => $newProjects,
-            'oldProjects' => $oldProjects
+            'oldProjects' => $oldProjects,
         ]);
     }
 }

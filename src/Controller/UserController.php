@@ -123,7 +123,7 @@ class UserController extends AbstractController
 
         $form->handleRequest($req);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $userProfile = $form->getData();
             $em->persist($userProfile);
