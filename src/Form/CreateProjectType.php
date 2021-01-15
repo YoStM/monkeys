@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Project;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +19,14 @@ class CreateProjectType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre :'
             ])
+            ->add('CategoryId', ChoiceType::class, [
+                'choices' => [
+                    new Category(130),
+                    new Category(131),
+                    new Category(132)
+                ],
+                'choice_value' => 'label'
+            ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description :',
                 'attr' => [
@@ -27,7 +37,6 @@ class CreateProjectType extends AbstractType
             //->add('createDate')
             //->add('modifyDate')
             //->add('active')
-            //->add('CategoryId')
             //->add('UserId')
         ;
     }

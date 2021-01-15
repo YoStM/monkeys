@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} | Mes projets {% endblock %}
+
+{% block main %}
+    <div class="col-lg-10 ml-auto mr-auto">
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici la liste des projets que vous avez initiés !</h1>
+        </div>
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <div style="overflow-x:auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-primary text-white toUppercase">
+                        <th></th>
+                        <th>Catégorie</th>
+                        <th>Titre</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td><a href="{{ path('project_update', { 'id': project.id }) }}"><i class="bi bi-pencil-square"></i></a></td>
+                            <td>{{ project.categoryId.label }}</td>
+                            <td>{{ project.title }}</td>
+                            <td>{{ project.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

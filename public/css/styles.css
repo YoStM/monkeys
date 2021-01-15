@@ -9,11 +9,15 @@ body {
 textarea {
     border: white;
     resize: none;
+    height: fit-content;
+    width: fit-content;
 }
 
 textarea:disabled {
     background-color: white;
     color: black;
+    height: fit-content;
+    width: fit-content;
 }
 
 tr {

@@ -70,11 +70,16 @@ class ProjectController extends AbstractController
      */
     public function update($id, Request $req, EntityManagerInterface $emi): Response
     {
+        $user = $this->getUser();
 
         $projectRepo = $this->getDoctrine()->getRepository(Project::class);
         $projectToUpdate = $projectRepo->find($id);
 
-        $form = $this->createForm(UpdateProjectType::class);
+        if ($user->getId() === $projectToUpdate->getUserId()) {
+            dump($projectRepo);
+        }
+
+        $form = $this->createForm(UpdateProjectType::class, $projectToUpdate);
         $form->handleRequest($req);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,7 +95,26 @@ class ProjectController extends AbstractController
         }
 
         return $this->render('project/update.html.twig', [
-            'project' => $projectToUpdate
+            'projectToUpdate' => $projectToUpdate,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Allows the user to have a look at all the projects s/he created
+     * 
+     * @Route("/mes_projets", name="project_ownProjects")
+     * @return Response
+     */
+    public function ownProjects(): Response
+    {
+        $userId = $this->getUser()->getId();
+        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
+        $projects = $projectRepo->getOwnProjects($userId);
+
+
+        return $this->render('project/ownProjects.html.twig', [
+            'projects' => $projects
         ]);
     }
 }
