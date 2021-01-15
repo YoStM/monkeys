@@ -39,7 +39,7 @@ class ProjectRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $psql = "
-                SELECT p.title, p.category_id_id, p.description, p.active, p.user_id_id, u.username, up.company_name, c.label 
+                SELECT p.id, p.title, p.category_id_id, p.description, p.active, p.user_id_id, u.username, up.company_name, c.label 
                 FROM project AS \"p\"
                 JOIN \"user\" AS \"u\" ON u.id = p.user_id_id
                 JOIN user_profile AS \"up\" ON up.user_id_id = p.user_id_id

@@ -1,9 +1,57 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{parent()}} | Détails projet{% endblock %}
+{% block title %}{{ parent() }} | Détails projet{% endblock %}
 
 {% block main %}
 
-    
+<div class="offset-lg-1 pt-5 pb-3">
+<h1>{{project.title}}</h1>
+</div>
+
+    <div class="offset-lg-1 col-lg-10 p-0">
+    <fieldset id="PersonalInfo">
+    <legend class="mb-5">Voici tous ce que nous savons au sujet de ce projet&nbsp;:</legend>
+    {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+        <div style="overflow-x:auto"> 
+        <table class="table table-borderless">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Commanditaire:</td>
+                    <td>{{ project.userId.username }} - {{project.userId.userProfile.companyName}}</td>
+                </tr>
+                <tr>
+                    <td>Description :</td>
+                    <td>{{project.description}}</td>
+                </tr>
+                {# <tr>
+                    <td>Nom :</td>
+                    <td>{{freelanceDetails.userProfile.lastName}}</td>
+                </tr>
+                <tr>
+                    <td>Société :</td>
+                    <td>{{freelanceDetails.userProfile.companyName}}</td>
+                </tr>
+                <tr>
+                    <td>Siret :</td>
+                    <td>{{freelanceDetails.userProfile.siret}}</td>
+                </tr>
+                <tr>
+                    <td>Profession&nbsp;:</td>
+                    <td>{{freelanceDetails.userProfile.activity}}</td>
+                </tr>
+                <tr>
+                    <td>Son&nbsp;univers&nbsp;:</td>
+                    <td>{{freelanceDetails.userProfile.aboutUser}}</td>
+                </tr> #}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center my-5">
+            <a href="#{#{{ path('offer_make') }}#}" class="btn btn-primary">Faire une offre pour ce projet</a>
+        </div>
+        </div>
+    </fieldset>
+    </div>
 
 {% endblock %}

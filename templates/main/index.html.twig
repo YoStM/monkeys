@@ -4,15 +4,14 @@
 
 {% block main %}
 
+{% if app.user and is_granted('ROLE_USER') %}
+
 <div class="row">
-    
-    <div class="col-8">
+    <div class="col-lg-8">
         <div class="offset-lg-1 pt-5 pb-3">
             <h1>Participez aux projets suivant !</h1>
         </div>
-
         <div class="offset-lg-1 col-lg-10 p-0">
-
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
@@ -21,35 +20,28 @@
                         <th>Activité</th>
                         <th>Catégorie</th>
                         <th>Titre</th>
-                        <th class="text-center">Détails</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for project in projects %}
-                    
-                    <tr>
-                        <td>{{project.userId.userProfile.companyName}}</td>
-                        <td>{{project.userId.userProfile.activity}}</td>
-                        <td>{{project.categoryId.label}}</td>
-                        <td>{{project.title}}</td>
-                        <td  class="text-center"><a href="{{path('project_details', {'id': project.id})}}" class="btn btn-primary"><i class="bi bi-info-circle"></i></a></td>
-                    </tr>
-
-                {% endfor %}
+                    {% for project in projects %}
+                        <tr>
+                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.userId.username}) }}">{{ project.userId.userProfile.companyName }}</a></td>
+                            <td>{{ project.userId.userProfile.activity }}</td>
+                            <td>{{ project.categoryId.label }}</td>
+                            <td><a href="{{ path('project_details', { 'id': project.id }) }}">{{ project.title }}</a></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             </div>
-
         </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-lg-4">
         <div class="offset-lg-1 pt-5 pb-3">
             <h3>Les projets les plus récents :</h3>
         </div>
-
         <div class="offset-lg-1 col-lg-10 p-0">
-
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
@@ -60,27 +52,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for project in newProjects %}
-                    
-                    <tr>
-                        <td><a href="{{path('user_freelanceDetails', {'freelanceUsername': project.userId.username})}}">{{project.userId.userProfile.companyName}}</a></td>
-                        <td><a href="{{path('project_details', {'id': project.id})}}">{{project.title}}</a></td>
-                        <td>{{project.categoryId.label}}</td>
-                    </tr>
-
-                {% endfor %}
+                    {% for project in newProjects %}
+                        <tr>
+                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.userId.username}) }}">{{ project.userId.userProfile.companyName }}</a></td>
+                            <td><a href="{{ path('project_details', { 'id': project.id }) }}">{{ project.title }}</a></td>
+                            <td>{{ project.categoryId.label }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             </div>
-
         </div>
-
         <div class="offset-lg-1 pt-5 pb-3">
             <h3>Les projets les plus en demande de soutien :</h3>
         </div>
-
         <div class="offset-lg-1 col-lg-10 p-0">
-
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
@@ -91,20 +77,106 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for project in oldProjects %}
-                    
-                    <tr>
-                        <td><a href="{{path('user_freelanceDetails', {'freelanceUsername': project.username})}}">{{project.company_name}}</a></td>
-                        <td><a href="{{path('project_details', {'id': project.user_id_id})}}">{{project.title}}</a></td>
-                        <td>{{project.label}}</td>
-                    </tr>
-
-                {% endfor %}
+                    {% for project in oldProjects %}
+                        <tr>
+                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.username}) }}">{{ project.company_name }}</a></td>
+                            <td><a href="{{ path('project_details', { 'id': project.id }) }}">{{ project.title }}</a></td>
+                            <td>{{ project.label }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             </div>
-
         </div>
     </div>
 </div>
+{% else %}
+    
+{# If user is logged in then we display the following #}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Participez aux projets suivant !</h1>
+        </div>
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <div style="overflow-x:auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-primary text-white toUppercase">
+                        <th>Société</th>
+                        <th>Activité</th>
+                        <th>Catégorie</th>
+                        <th>Titre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td>{{ project.userId.userProfile.companyName }}</td>
+                            <td>{{ project.userId.userProfile.activity }}</td>
+                            <td>{{ project.categoryId.label }}</td>
+                            <td>{{ project.title }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h3>Les projets les plus récents :</h3>
+        </div>
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <div style="overflow-x:auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-primary text-white toUppercase">
+                        <th>Société</th>
+                        <th>Titre</th>
+                        <th>Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in newProjects %}
+                        <tr>
+                            <td>{{ project.userId.userProfile.companyName }}</td>
+                            <td>{{ project.title }}</td>
+                            <td>{{ project.categoryId.label }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h3>Les projets les plus en demande de soutien :</h3>
+        </div>
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <div style="overflow-x:auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-primary text-white toUppercase">
+                        <th>Société</th>
+                        <th>Titre</th>
+                        <th>Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in oldProjects %}
+                        <tr>
+                            <td>{{ project.company_name }}</td>
+                            <td>{{ project.title }}</td>
+                            <td>{{ project.label }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
 {% endblock %}
