@@ -47,9 +47,15 @@ class User implements UserInterface
      */
     private $project;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="userId")
+     */
+    private $offers;
+
     public function __construct()
     {
         $this->project = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,6 +172,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($project->getUserId() === $this) {
                 $project->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offer[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->removeElement($offer)) {
+            // set the owning side to null (unless already changed)
+            if ($offer->getUserId() === $this) {
+                $offer->setUserId(null);
             }
         }
 
