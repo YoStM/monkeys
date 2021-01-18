@@ -94,6 +94,17 @@ class ProjectRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getCategoryLabel(int $categoryId)
+    {
+        return $this->createQueryBuilder("p")
+            ->join("p.CategoryId", "c")
+            ->where("p.CategoryId = :categoryId")
+            ->setParameter("categoryId", $categoryId)
+            ->orderBy("p.CategoryId")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Projects[] Returns an array of Projects objects
     //  */

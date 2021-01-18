@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Project;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,19 +19,24 @@ class CreateProjectType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre :'
+                'label' => 'Titre :',
+                'attr' => [
+                    'class' => 'my-3'
+                ]
             ])
-            ->add('CategoryId', ChoiceType::class, [
-                'choices' => [
-                    new Category(130),
-                    new Category(131),
-                    new Category(132)
-                ],
-                'choice_value' => 'label'
+            ->add('CategoryId', EntityType::class, [
+                'label' => 'Compétence recherchée :',
+                'class' => Category::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder("c")
+                        ->orderBy("c.label");
+                },
+                'choice_label' => 'label'
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description :',
                 'attr' => [
+                    'class' => 'my-3',
                     'rows' => 7,
                     'cols' => 63
                 ]

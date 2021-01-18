@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Project;
 use App\Entity\Category;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -35,15 +37,14 @@ class UpdateProjectType extends AbstractType
                     'class' => 'custom-select'
                 ]
             ])
-            ->add('CategoryId', ChoiceType::class, [
-                'choices' => [
-                    new Category(130),
-                    new Category(131),
-                    new Category(132)
-                ],
-                'attr' => [
-                    'class' => 'custom-select'
-                ]
+            ->add('CategoryId', EntityType::class, [
+                'label' => 'Compétence recherchée :',
+                'class' => Category::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder("c")
+                        ->orderBy("c.label");
+                },
+                'choice_label' => 'label'
             ]);
     }
 

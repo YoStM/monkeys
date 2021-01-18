@@ -33,9 +33,13 @@ class AppFixtures extends Fixture
         $category->setLabel("Développement Web");
         $manager->persist($category);
 
+        $manager->flush();
+
         $category2 = new Category();
         $category2->setLabel("Graphisme");
         $manager->persist($category2);
+
+        $manager->flush();
 
         $category3 = new Category();
         $category3->setLabel("Administration serveur");

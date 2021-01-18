@@ -26,6 +26,8 @@ class ProjectController extends AbstractController
         $form = $this->createForm(CreateProjectType::class);
         $form->handleRequest($req);
 
+        dump($req);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $project->setCreateDate(new DateTime());
             $project->setActive(true);
@@ -75,12 +77,13 @@ class ProjectController extends AbstractController
         $projectRepo = $this->getDoctrine()->getRepository(Project::class);
         $projectToUpdate = $projectRepo->find($id);
 
-        if ($user->getId() === $projectToUpdate->getUserId()) {
-            dump($projectRepo);
-        }
-
         $form = $this->createForm(UpdateProjectType::class, $projectToUpdate);
         $form->handleRequest($req);
+
+        $label = $projectRepo->getCategoryLabel($projectToUpdate->getCategoryId()->getId());
+
+        dump($projectToUpdate);
+        dump($label);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $project = $form->getData();

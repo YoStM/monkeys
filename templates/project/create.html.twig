@@ -13,10 +13,13 @@
     <fieldset class="pt-5 mb-auto">
         <legend class="text-center mb-3">Présentez-nous votre projet en quelques mots&nbsp;:</legend>
 
-            {{form_start(projectForm)}}
-
-                {{form_row(projectForm.title)}}
-                {{form_row(projectForm.description)}}
+            {{ form_start(projectForm) }}
+                
+                <div class="my-3">
+                    {{ form_row(projectForm.title) }}
+                    {{ form_row(projectForm.CategoryId) }}
+                    {{ form_row(projectForm.description) }}
+                </div>
 
                 <button class="btn btn-primary mt-1" type="submit">Publier le projet</button>
 

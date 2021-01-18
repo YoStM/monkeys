@@ -16,33 +16,35 @@
             <div class="row">
             <div class="col">
             <div class="form-group row">
-                <label for="firstName" class="offset-sm-2 col-sm-2 col-form-label">Titre&nbsp;:</label>
-                <div class="col-sm-6">
+                <label for="firstName" class="col-sm-3 col-form-label">Titre&nbsp;:</label>
+                <div class="col-sm-9">
                 {{form_widget(form.title)}}
                 </div>
                 </div>
                 
                 <div class="form-group row">
-                <label for="lastName" class="offset-sm-2 col-sm-2 col-form-label">Description&nbsp;:</label>
-                <div class="col-sm-6">
+                <label for="lastName" class="col-sm-3 col-form-label">Description&nbsp;:</label>
+                <div class="col-sm-9">
                 {{form_widget(form.description)}}
                 </div>
                 </div>
             </div>
             <div class="col">
+
                 <div class="form-group row">
-                <label for="lastName" class="offset-sm-2 col-sm-2 col-form-label">Statut&nbsp;:</label>
-                <div class="col-sm-6">
-                {{form_widget(form.active)}}
+                <label for="lastName" class="offset-sm-1 col-sm-2 col-form-label">Catégorie&nbsp;:</label>
+                <div class="col-sm-9">
+                {{form_widget(form.CategoryId)}}
                 </div>
                 </div>
 
                 <div class="form-group row">
-                <label for="lastName" class="offset-sm-2 col-sm-2 col-form-label">Catégorie&nbsp;:</label>
-                <div class="col-sm-6">
-                {{form_widget(form.CategoryId)}}
+                <label for="lastName" class="offset-sm-1 col-sm-2 col-form-label">Statut&nbsp;:</label>
+                <div class="col-sm-9">
+                {{form_widget(form.active)}}
                 </div>
                 </div>
+
             </div>
             </div>
             </div>
