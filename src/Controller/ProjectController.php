@@ -16,6 +16,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProjectController extends AbstractController
 {
     /**
+     * Allows the user to have a look at all the projects s/he created
+     * 
+     * @Route("/mes_projets", name="project_ownProjects")
+     * @return Response
+     */
+    public function ownProjects(): Response
+    {
+        $userId = $this->getUser()->getId();
+        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
+        $projects = $projectRepo->getOwnProjects($userId);
+
+
+        return $this->render('project/ownProjects.html.twig', [
+            'projects' => $projects
+        ]);
+    }
+
+    /**
+     * Allow a user to create a project and publish it on the website
+     * 
      * @Route("/creer_project", name="project_create")
      */
     public function create(Request $req, EntityManagerInterface $emi): Response
@@ -48,8 +68,9 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * Allows users to get / read more information about ones project
      * 
-     * @Route("/details_projet/{id}", name="project_details")
+     * @Route("/details_projet/{id}", name="project_details", requirements={"id"="\d+"})
      */
     public function details($id): Response
     {
@@ -80,11 +101,6 @@ class ProjectController extends AbstractController
         $form = $this->createForm(UpdateProjectType::class, $projectToUpdate);
         $form->handleRequest($req);
 
-        $label = $projectRepo->getCategoryLabel($projectToUpdate->getCategoryId()->getId());
-
-        dump($projectToUpdate);
-        dump($label);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $project = $form->getData();
             $date = date_create("now", new DateTimeZone("Europe/Paris"));
@@ -92,32 +108,14 @@ class ProjectController extends AbstractController
             $emi->persist($project);
             $emi->flush();
 
-            $this->addFlash('Success', 'La modification de votre projet a bien été enregistrée !');
+            $this->addFlash('success', 'La modification de votre projet a bien été enregistrée !');
 
-            $this->redirectToRoute('project_details');
+            return $this->redirectToRoute('project_ownProjects');
         }
 
         return $this->render('project/update.html.twig', [
             'projectToUpdate' => $projectToUpdate,
             'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * Allows the user to have a look at all the projects s/he created
-     * 
-     * @Route("/mes_projets", name="project_ownProjects")
-     * @return Response
-     */
-    public function ownProjects(): Response
-    {
-        $userId = $this->getUser()->getId();
-        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
-        $projects = $projectRepo->getOwnProjects($userId);
-
-
-        return $this->render('project/ownProjects.html.twig', [
-            'projects' => $projects
         ]);
     }
 }

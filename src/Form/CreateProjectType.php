@@ -31,7 +31,10 @@ class CreateProjectType extends AbstractType
                     return $er->createQueryBuilder("c")
                         ->orderBy("c.label");
                 },
-                'choice_label' => 'label'
+                'choice_label' => 'label',
+                'attr' => [
+                    'class' => 'my-3'
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description :',
