@@ -1,0 +1,135 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} | Détails offre{% endblock %}
+
+{% block main %}
+
+    {% if offer.userId.id is same as(user.id) %}
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici l'offre envoyée à {{offer.project.userId.username}}</h1>
+        </div>
+
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <fieldset id="PersonalInfo">
+            <legend class="mb-5">Cette offre correspond au projet - <span id="project_details_toggler" class="btn btn-primary">{{offer.project.title}} <i class="bi bi-chevron-down"></i> </span></legend>
+                <div id="project_details_div" class="hidden">
+                     <div style="overflow-x:auto"> 
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <td>Pour rappel !</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Commanditaire:</td>
+                                    <td>{{ offer.project.userId.username }} - {{offer.project.userId.userProfile.companyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description :</td>
+                                    <td>{{offer.project.description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+                <div style="overflow-x:auto"> 
+                <table class="table table-borderless">
+                    <thead>
+                    </thead>
+                    <tbody>
+                            <td>Date de livraison estimée :</td>
+                            <td>{{ offer.deadline|date("d.m.Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td>Coût :</td>
+                            <td>{{ offer.price }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{ offer.description }}</td>
+                        </tr>
+                        <tr>
+                    </tbody>
+                </table>
+                </div>
+            </fieldset>
+        </div>
+    {% else %}
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici l'offre envoyée par {{offer.userId.username}}</h1>
+        </div>
+
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <fieldset id="PersonalInfo">
+            <legend class="mb-5">Cette offre correspond au projet - <span id="project_details_toggler" class="btn btn-primary">{{offer.project.title}}</span></legend>
+                <div id="project_details_div" class="hidden">
+                     <div style="overflow-x:auto"> 
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <td>Pour rappel !</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Commanditaire:</td>
+                                    <td>{{ offer.project.userId.username }} - {{offer.project.userId.userProfile.companyName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description :</td>
+                                    <td>{{offer.project.description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+                <div style="overflow-x:auto"> 
+                <table class="table table-borderless">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Détails :</td>
+                            <td>{{ offer.description }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date de livraison estimée :</td>
+                            <td>{{ offer.deadline|date("d.m.Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td>Coût :</td>
+                            <td>{{ offer.price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center my-5">
+                    <a href="#" class="btn btn-primary">Faire une offre pour ce projet</a>
+                </div>
+                </div>
+            </fieldset>
+        </div>
+    {% endif %}
+    
+
+{% endblock %}
+
+{% block javascripts %} 
+<script>
+    const btn_project_details_toggler = document.getElementById('project_details_toggler');
+    const project_details_div = document.getElementById('project_details_div');
+    btn_project_details_toggler.addEventListener('click', expendDetails);
+
+    function expendDetails(e) {
+        if (project_details_div.classList.contains('hidden')) {
+            project_details_div.className = 'show';
+            btn_project_details_toggler.querySelector("i").className = 'bi bi-chevron-up';
+        } else {
+            project_details_div.className = 'hidden';
+            btn_project_details_toggler.querySelector("i").className = 'bi bi-chevron-down';
+        }
+    }
+</script>
+{% endblock %}

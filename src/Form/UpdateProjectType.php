@@ -44,7 +44,10 @@ class UpdateProjectType extends AbstractType
                     return $er->createQueryBuilder("c")
                         ->orderBy("c.label");
                 },
-                'choice_label' => 'label'
+                'choice_label' => 'label',
+                'attr' => [
+                    'class' => 'custom-select'
+                ]
             ]);
     }
 

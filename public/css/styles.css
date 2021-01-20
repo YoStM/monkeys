@@ -6,30 +6,22 @@ body {
     padding: 0px;
 }
 
-textarea {
-    border: white;
-    resize: none;
-    height: fit-content;
-    width: fit-content;
-}
-
-textarea:disabled {
-    background-color: white;
-    color: black;
-    height: fit-content;
-    width: fit-content;
-}
-
 tr {
-    height: 50px;
+    height: 51px;
+}
+
+.hidden {
+    display: none;
+}
+
+.show table {
+    background-color: #FFE;
+    border-radius: 25px;
+    font-style: italic;
+    margin-bottom: 3em;
+    box-shadow: 3px 7px #FEE;
 }
 
 .toUppercase {
     text-transform: uppercase;
-}
-
-.form-group .form-control {
-    border: white;
-    border-bottom: 1px solid #E7E8E9;
-    width: fit-content;
 }

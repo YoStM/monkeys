@@ -1,20 +1,94 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello OfferController!{% endblock %}
+{% block title %}{{ parent() }} | Soumettre offre{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block main %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="text-center pt-5 pb-3">
+        <h1>Réponse à appel d'offre !</h1>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/opt/lampp/docs/little-monkeys/src/Controller/OfferController.php'|file_link(0) }}">src/Controller/OfferController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/opt/lampp/docs/little-monkeys/templates/offer/index.html.twig'|file_link(0) }}">templates/offer/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="mt-3 ml-auto mr-auto">
+
+        <div class="mb-5 p-3 container">
+
+            <table class="table-borderless ml-auto mr-auto">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center h4">
+                            L'appel à contribution de {{ project.userId.userProfile.companyName }} :
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="25%">Categorie :</td>
+                        <td width="75%">{{ project.categoryId.label }}</td>
+                    </tr>
+                    <tr>
+                        <td width="25%">Titre :</td>
+                        <td width="75%">{{ project.title }}</td>
+                    </tr>
+                    <tr>
+                        <td width="25%">Description :</td>
+                        <td width="75%">{{ project.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        {# ***************************************************************************************************** #}
+        <div class="mb-5 p-3 container">
+
+        <form method="post">
+            <fieldset class="pt-5 mb-auto">
+                <legend class="text-center mb-3">Présentez-nous votre solution&nbsp;:</legend>
+
+                    {{ form_start(offerForm) }}
+                        
+                        <div class="my-3">
+                            {{ form_row(offerForm.description) }}
+                            <div class="container row">
+                            <div class="form-group row">
+                            <label for="create_offer_deadline" class="col-sm-6 col-form-label">Date de livraison estimée&nbsp;:</label>
+                            <div class="col-sm-5">
+                            {{ form_widget(offerForm.deadline)}}
+                            </div>
+                            </div>
+                            <div class="form-group row ml-auto">
+                            <label for="create_offer_price" class="col-sm-4 col-form-label">Prix total&nbsp;:</label>
+                            <div class="col-sm-8">
+                            {{ form_widget(offerForm.price) }}
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary mt-1" type="submit">Soumettre l'offre à {{ project.userId.username }}</button>
+
+                    {{form_end(offerForm)}}
+
+            </fieldset>
+        </form>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+    <script>
+    
+        $(document).ready(function(){
+            $('.js-datepicker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });
+        });
+
+    </script>
 {% endblock %}
