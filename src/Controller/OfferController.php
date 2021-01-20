@@ -65,10 +65,16 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/mes_offres", name="offer_ownOffer")
+     * @Route("/mes_offres", name="offer_ownOffers")
      */
     public function ownOffers(): Response
     {
-        return $this->render('offer/ownOffer.html.twig', []);
+        $user = $this->getUser();
+        $ownOffers = $this->getDoctrine()->getRepository(Offer::class)->findOffersByUserId($user->getId());
+
+        return $this->render('offer/ownOffers.html.twig', [
+            'user' => $user,
+            'offers' => $ownOffers
+        ]);
     }
 }

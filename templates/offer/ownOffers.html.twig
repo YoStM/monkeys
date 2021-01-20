@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} | Mes offres {% endblock %}
+
+{% block main %}
+    <div class="col-lg-10 ml-auto mr-auto">
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici la liste des projets que vous avez initiés !</h1>
+        </div>
+
+        {% if offers|length == 0 %}
+        
+        <div class="text-center bg-light">
+            <h3>Vous n'avez soumis aucune offre !</h3>
+            <p>
+                Jetez un oeil aux à la liste des projets en attente de contributeurs en cliquant sur le logo dans la barre de menu à gauche.
+            </p>
+        </div>
+
+        {% else %}
+        
+        <div class="offset-lg-1 col-lg-10 p-0">
+            <div style="overflow-x:auto">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-primary text-white toUppercase">
+                        <th>Catégorie</th>
+                        <th>Titre</th>
+                        <th colspan="3">Offre {% if offers|length == 1 %}envoyée {% else %}
+                            envoyées {% endif %} à</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in offers %}
+                        <tr>
+                            <td>{{ offer.project.categoryId.label }}</td>
+                            <td>{{ offer.project.title }}</td>
+                            <td>{{ offer.project.userId.username }}</td>
+                            <td>{{ offer.project.userId.userProfile.companyName }}</td>
+                            <td><a href="{{ path('offer_details', {'id': offer.id}) }}"><i class="bi bi-info-circle-fill"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+{% endblock %}
