@@ -77,7 +77,7 @@ class OfferController extends AbstractController
     public function ownOffers(): Response
     {
         $user = $this->getUser();
-        $ownOffers = $this->getDoctrine()->getRepository(Offer::class)->findOffersByUserId($user->getId());
+        $ownOffers = $this->getDoctrine()->getRepository(Offer::class)->findOffersByContributorId($user->getId());
 
         return $this->render('offer/ownOffers.html.twig', [
             'user' => $user,

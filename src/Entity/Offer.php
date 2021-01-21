@@ -38,7 +38,7 @@ class Offer
     private $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=project::class, inversedBy="offers")
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
      */
     private $project;

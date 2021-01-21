@@ -42,11 +42,11 @@ class User implements UserInterface
      */
     private $userProfile;
 
-    public function __construct()
-    {
-        $this->project = new ArrayCollection();
-        $this->offers = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->project = new ArrayCollection();
+    //     $this->offers = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {

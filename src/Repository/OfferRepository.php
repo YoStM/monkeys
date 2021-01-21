@@ -23,17 +23,17 @@ class OfferRepository extends ServiceEntityRepository
      * @return Offer[] Returns an array of Offer objects
      */
 
-    public function findOffersByUserId($userId)
+    public function findOffersByContributorId($userId)
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.userId = :val')
-            ->setParameter('val', $userId)
-            ->orderBy('o.id', 'ASC')
+            ->join("o.project", "po")
+            ->join("o.contributorId", "oc")
+            ->where("oc.UserId = :id")
+            ->setParameter("id", $userId)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
-
 
     /*
     public function findOneBySomeField($value): ?Offer
