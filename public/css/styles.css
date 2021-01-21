@@ -25,3 +25,10 @@ tr {
 .toUppercase {
     text-transform: uppercase;
 }
+
+.verticaly-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 75vh;
+}

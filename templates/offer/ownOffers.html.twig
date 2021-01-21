@@ -4,13 +4,13 @@
 
 {% block main %}
     <div class="col-lg-10 ml-auto mr-auto">
-        <div class="offset-lg-1 pt-5 pb-3">
-            <h1>Voici la liste des projets que vous avez initiés !</h1>
-        </div>
 
         {% if offers|length == 0 %}
         
-        <div class="text-center bg-light">
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici la liste des offres soumises mais ...</h1>
+        </div>
+        <div class="text-center bg-light verticaly-center">
             <h3>Vous n'avez soumis aucune offre !</h3>
             <p>
                 Jetez un oeil aux à la liste des projets en attente de contributeurs en cliquant sur le logo dans la barre de menu à gauche.
@@ -19,6 +19,9 @@
 
         {% else %}
         
+        <div class="offset-lg-1 pt-5 pb-3">
+            <h1>Voici la liste des offres soumises</h1>
+        </div>
         <div class="offset-lg-1 col-lg-10 p-0">
             <div style="overflow-x:auto">
             <table class="table table-hover">
