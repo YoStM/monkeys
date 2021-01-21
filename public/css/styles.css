@@ -27,6 +27,7 @@ tr {
 }
 
 .verticaly-center {
+    border-radius: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
