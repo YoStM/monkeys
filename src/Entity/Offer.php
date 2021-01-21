@@ -49,6 +49,12 @@ class Offer
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjectContributor::class, inversedBy="offers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contributorId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +128,18 @@ class Offer
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getContributorId(): ?ProjectContributor
+    {
+        return $this->contributorId;
+    }
+
+    public function setContributorId(?ProjectContributor $contributorId): self
+    {
+        $this->contributorId = $contributorId;
 
         return $this;
     }

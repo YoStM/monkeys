@@ -61,6 +61,12 @@ class Project
      */
     private $offers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjectOwner::class, inversedBy="projects")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ownerId;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -183,6 +189,18 @@ class Project
                 $offer->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwnerId(): ?ProjectOwner
+    {
+        return $this->ownerId;
+    }
+
+    public function setOwnerId(?ProjectOwner $ownerId): self
+    {
+        $this->ownerId = $ownerId;
 
         return $this;
     }
