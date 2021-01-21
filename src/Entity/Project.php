@@ -51,12 +51,6 @@ class Project
     private $CategoryId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="project")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $UserId;
-
-    /**
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="project", orphanRemoval=true)
      */
     private $offers;
@@ -145,18 +139,6 @@ class Project
     public function setCategoryId(?Category $CategoryId): self
     {
         $this->CategoryId = $CategoryId;
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->UserId;
-    }
-
-    public function setUserId(?User $UserId): self
-    {
-        $this->UserId = $UserId;
 
         return $this;
     }

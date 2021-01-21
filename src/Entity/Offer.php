@@ -44,12 +44,6 @@ class Offer
     private $project;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userId;
-
-    /**
      * @ORM\ManyToOne(targetEntity=ProjectContributor::class, inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -116,18 +110,6 @@ class Offer
     public function setProject(?project $project): self
     {
         $this->project = $project;
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?User $userId): self
-    {
-        $this->userId = $userId;
 
         return $this;
     }

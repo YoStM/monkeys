@@ -42,16 +42,6 @@ class User implements UserInterface
      */
     private $userProfile;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="UserId", orphanRemoval=true)
-     */
-    private $project;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="userId")
-     */
-    private $offers;
-
     public function __construct()
     {
         $this->project = new ArrayCollection();
@@ -144,66 +134,6 @@ class User implements UserInterface
         }
 
         $this->userProfile = $userProfile;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Projects[]
-     */
-    public function getProjects(): Collection
-    {
-        return $this->projects;
-    }
-
-    public function addProject(Project $project): self
-    {
-        if (!$this->projects->contains($project)) {
-            $this->projects[] = $project;
-            $project->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProject(Project $project): self
-    {
-        if ($this->projects->removeElement($project)) {
-            // set the owning side to null (unless already changed)
-            if ($project->getUserId() === $this) {
-                $project->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Offer[]
-     */
-    public function getOffers(): Collection
-    {
-        return $this->offers;
-    }
-
-    public function addOffer(Offer $offer): self
-    {
-        if (!$this->offers->contains($offer)) {
-            $this->offers[] = $offer;
-            $offer->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOffer(Offer $offer): self
-    {
-        if ($this->offers->removeElement($offer)) {
-            // set the owning side to null (unless already changed)
-            if ($offer->getUserId() === $this) {
-                $offer->setUserId(null);
-            }
-        }
 
         return $this;
     }
