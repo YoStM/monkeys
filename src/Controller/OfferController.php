@@ -5,7 +5,9 @@ namespace App\Controller;
 use DateTimeZone;
 use App\Entity\Offer;
 use App\Entity\Project;
+use App\Entity\ProjectContributor;
 use App\Form\CreateOfferType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +25,7 @@ class OfferController extends AbstractController
         $projectRepo = $this->getDoctrine()->getRepository(Project::class);
         $project = $projectRepo->findOneBy(['id' => $id]);
         $projectUserId = (int)$project->getOwnerId()->getUserId()->getId();
+        $projectContributor = new ProjectContributor();
         $offer = new Offer();
 
         $offerForm = $this->createForm(CreateOfferType::class, $offer);
@@ -30,9 +33,13 @@ class OfferController extends AbstractController
 
         if ($this->getUser() && $this->getUser()->getId() != $projectUserId) {
             if ($offerForm->isSubmitted() && $offerForm->isValid()) {
-                $offer->setCreateDate(date_create("now", new DateTimeZone("Europe/Paris")));
+                $projectContributor->setUserId($offerMaker);
+
+                $offer->setCreateDate(new DateTime("now", new DateTimeZone("Europe/Paris")));
                 $offer->setProject($project);
-                $offer->setUserId($offerMaker);
+                $offer->setContributorId($projectContributor);
+
+                $emi->persist($projectContributor);
                 $emi->persist($offer);
                 $emi->flush();
 
