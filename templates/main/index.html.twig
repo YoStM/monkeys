@@ -25,8 +25,8 @@
                 <tbody>
                     {% for project in projects %}
                         <tr>
-                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.userId.username}) }}">{{ project.userId.userProfile.companyName }}</a></td>
-                            <td>{{ project.userId.userProfile.activity }}</td>
+                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.ownerId.userId.username}) }}">{{ project.ownerId.userId.userProfile.companyName }}</a></td>
+                            <td>{{ project.ownerId.userId.userProfile.activity }}</td>
                             <td>{{ project.categoryId.label }}</td>
                             <td><a href="{{ path('project_details', { 'id': project.id }) }}">{{ project.title }}</a></td>
                         </tr>
@@ -54,7 +54,7 @@
                 <tbody>
                     {% for project in newProjects %}
                         <tr>
-                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.userId.username}) }}">{{ project.userId.userProfile.companyName }}</a></td>
+                            <td><a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.ownerId.userId.username}) }}">{{ project.ownerId.userId.userProfile.companyName }}</a></td>
                             <td><a href="{{ path('project_details', { 'id': project.id }) }}">{{ project.title }}</a></td>
                             <td>{{ project.categoryId.label }}</td>
                         </tr>
@@ -112,8 +112,8 @@
                 <tbody>
                     {% for project in projects %}
                         <tr>
-                            <td>{{ project.userId.userProfile.companyName }}</td>
-                            <td>{{ project.userId.userProfile.activity }}</td>
+                            <td>{{ project.ownerId.userId.userProfile.companyName }}</td>
+                            <td>{{ project.ownerId.userId.userProfile.activity }}</td>
                             <td>{{ project.categoryId.label }}</td>
                             <td>{{ project.title }}</td>
                         </tr>
@@ -141,7 +141,7 @@
                 <tbody>
                     {% for project in newProjects %}
                         <tr>
-                            <td>{{ project.userId.userProfile.companyName }}</td>
+                            <td>{{ project.ownerId.userId.userProfile.companyName }}</td>
                             <td>{{ project.title }}</td>
                             <td>{{ project.categoryId.label }}</td>
                         </tr>

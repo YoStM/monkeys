@@ -33,7 +33,7 @@ class CreateProjectType extends AbstractType
                 },
                 'choice_label' => 'label',
                 'attr' => [
-                    'class' => 'my-3'
+                    'class' => 'my-3 custom-select'
                 ]
             ])
             ->add('description', TextareaType::class, [

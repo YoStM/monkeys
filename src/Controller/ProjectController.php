@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use DateTimeZone;
 use App\Entity\Project;
+use App\Entity\ProjectOwner;
 use App\Form\CreateProjectType;
 use App\Form\UpdateProjectType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,6 +43,7 @@ class ProjectController extends AbstractController
     {
         $user = $this->getUser()->getId();
         $project = new Project();
+        $projectOwner = new ProjectOwner();
 
         $form = $this->createForm(CreateProjectType::class);
         $form->handleRequest($req);
@@ -49,11 +51,12 @@ class ProjectController extends AbstractController
         dump($req);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $project->setCreateDate(new DateTime());
+            $projectOwner->setUserId($user);
+            $project->setCreateDate(new DateTime("now", new DateTimeZone("Europe/Paris")));
             $project->setActive(true);
-            $project->setCategoryId($req->request->get('category'));
-            $project->setUserId($user);
+            $project->setOwnerId($projectOwner);
 
+            $emi->persist($projectOwner);
             $emi->persist($project);
             $emi->flush();
 
@@ -103,7 +106,7 @@ class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $project = $form->getData();
-            $date = date_create("now", new DateTimeZone("Europe/Paris"));
+            $date = new DateTime("now", new DateTimeZone("Europe/Paris"));
             $project->setModifyDate($date);
             $emi->persist($project);
             $emi->flush();

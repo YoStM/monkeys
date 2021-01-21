@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Project;
 use App\Entity\Category;
+use App\Entity\ProjectOwner;
 use App\Entity\UserProfile;
 use DateTime;
 use DateTimeZone;
@@ -24,7 +25,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        $date = date_create("now", new DateTimeZone("Europe/Paris"));
+        $date = new DateTime("now", new DateTimeZone("Europe/Paris"));
         $interval = 1;
         $interval2 = 2;
         $projectNbr = 1;
@@ -65,8 +66,7 @@ class AppFixtures extends Fixture
         $userProfile1->setEmail("yo.stm@outlook.com");
         $userProfile1->setSiret("12354897654329");
         $userProfile1->setActivity("Développeur Web");
-        $userProfile1->setAboutUser("J'aime le backend et plus spécialement php et Symfony.
-                                    Peut-être aussi parce que je ne connais que ça pour le moment. HTML5 - CSS - JS - PHP - Symfony 5.");
+        $userProfile1->setAboutUser("J'aime le backend et plus spécialement php et Symfony. Peut-être aussi parce que je ne connais que ça pour le moment. HTML5 - CSS - JS - PHP - Symfony 5.");
         $userProfile1->setCredit(500);
         $userProfile1->setUserId($user1);
 
@@ -79,14 +79,18 @@ class AppFixtures extends Fixture
 
             $interval3 = $interval * $i;
 
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user1);
+            $manager->persist($projectOwner);
+            $manager->flush();
+
             $project = new Project();
             $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user1);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;
@@ -94,16 +98,20 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
 
-            $interval3 = $interval2 * $i;
+            $interval3 = $interval * $i;
+
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user1);
+            $manager->persist($projectOwner);
+            $manager->flush();
 
             $project = new Project();
-            $project->setCategoryId($category3);
+            $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user1);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;
@@ -127,10 +135,7 @@ class AppFixtures extends Fixture
         $userProfile2->setEmail("vi.stm@outlook.com");
         $userProfile2->setSiret("12357957654653");
         $userProfile2->setActivity("Graphiste");
-        $userProfile2->setAboutUser("Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                    Sed at purus in metus mollis ultricies vitae ut orci. 
-                                    Duis tempor nulla a massa finibus tincidunt. Ut at suscipit tortor. 
-                                    Quisque non dolor quis lacus imperdiet. ");
+        $userProfile2->setAboutUser("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at purus in metus mollis ultricies vitae ut orci. Duis tempor nulla a massa finibus tincidunt. Ut at suscipit tortor. Quisque non dolor quis lacus imperdiet. ");
         $userProfile2->setCredit(500);
         $userProfile2->setUserId($user2);
         $manager->persist($userProfile2);
@@ -140,30 +145,39 @@ class AppFixtures extends Fixture
 
             $interval3 = $interval2 * $i;
 
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user2);
+            $manager->persist($projectOwner);
+            $manager->flush();
+
             $project = new Project();
-            $project->setCategoryId($category);
+            $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user2);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;
         }
 
         for ($i = 0; $i < 5; $i++) {
+
             $interval3 = $interval2 * $i;
 
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user2);
+            $manager->persist($projectOwner);
+            $manager->flush();
+
             $project = new Project();
-            $project->setCategoryId($category3);
+            $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user2);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;
@@ -185,10 +199,7 @@ class AppFixtures extends Fixture
         $userProfile3->setEmail("ma.bielmann@outlook.com");
         $userProfile3->setSiret("12357456254653");
         $userProfile3->setActivity("Ux designer");
-        $userProfile3->setAboutUser("Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                    Sed at purus in metus mollis ultricies vitae ut orci. 
-                                    Duis tempor nulla a massa finibus tincidunt. Ut at suscipit tortor. 
-                                    Quisque non dolor quis lacus imperdiet. ");
+        $userProfile3->setAboutUser("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at purus in metus mollis ultricies vitae ut orci. Duis tempor nulla a massa finibus tincidunt. Ut at suscipit tortor. Quisque non dolor quis lacus imperdiet. ");
         $userProfile3->setCredit(500);
         $userProfile3->setUserId($user3);
         $manager->persist($userProfile3);
@@ -198,14 +209,18 @@ class AppFixtures extends Fixture
 
             $interval3 = $interval2 * $i;
 
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user3);
+            $manager->persist($projectOwner);
+            $manager->flush();
+
             $project = new Project();
-            $project->setCategoryId($category);
+            $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user3);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;
@@ -214,14 +229,18 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 5; $i++) {
             $interval3 = $interval2 * $i;
 
+            $projectOwner = new ProjectOwner();
+            $projectOwner->setUserId($user3);
+            $manager->persist($projectOwner);
+            $manager->flush();
+
             $project = new Project();
             $project->setCategoryId($category2);
             $project->setTitle("Project numéro " . $projectNbr);
-            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                            Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
+            $project->setDescription("Voici les détails du projet numéro " . $projectNbr . " : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt quaerat, laboriosam corporis aperiam obcaecati accusamus.");
             $project->setActive(true);
             $project->setCreateDate($date->modify("-$interval3 day"));
-            $project->setUserId($user3);
+            $project->setOwnerId($projectOwner);
             $manager->persist($project);
             $manager->flush();
             $projectNbr++;

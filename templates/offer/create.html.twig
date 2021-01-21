@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Soumettre offre{% endblock %}
+{% block title %}{{ parent() }} Soumettre offre{% endblock %}
 
 {% block main %}
 
@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th colspan="3" class="text-center h4">
-                            L'appel à contribution de {{ project.userId.userProfile.companyName }} :
+                            L'appel à contribution de {{ project.ownerId.userId.userProfile.companyName }} :
                         </th>
                     </tr>
                 </thead>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-primary mt-1" type="submit">Soumettre l'offre à {{ project.userId.username }}</button>
+                        <button class="btn btn-primary mt-1" type="submit">Soumettre l'offre à {{ project.ownerId.userId.username }}</button>
 
                     {{form_end(offerForm)}}
 

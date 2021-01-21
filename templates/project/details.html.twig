@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ parent() }} | Détails projet{% endblock %}
+{% block title %}{{ parent() }} Détails projet{% endblock %}
 
 {% block main %}
 
@@ -19,7 +19,7 @@
             <tbody>
                 <tr>
                     <td>Commanditaire:</td>
-                    <td>{{ project.userId.username }} - {{project.userId.userProfile.companyName}}</td>
+                    <td>{{ project.ownerId.userId.username }} - {{project.ownerId.userId.userProfile.companyName}}</td>
                 </tr>
                 <tr>
                     <td>Description :</td>

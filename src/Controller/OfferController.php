@@ -22,7 +22,7 @@ class OfferController extends AbstractController
         $offerMaker = $this->getUser();
         $projectRepo = $this->getDoctrine()->getRepository(Project::class);
         $project = $projectRepo->findOneBy(['id' => $id]);
-        $projectUserId = (int)$project->getUserId()->getId();
+        $projectUserId = (int)$project->getOwnerId()->getUserId()->getId();
         $offer = new Offer();
 
         $offerForm = $this->createForm(CreateOfferType::class, $offer);
