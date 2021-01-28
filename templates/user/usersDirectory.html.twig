@@ -26,7 +26,7 @@
                 <td>{{usersProfile.firstName|capitalize}} {{usersProfile.lastName|first}}.</td>
                 <td>{{usersProfile.activity}}</td>
                 <td>{{usersProfile.companyName}}</td>
-                <td  class="text-center"><a href="{{path('user_freelanceDetails', {'freelanceUsername': usersProfile.userId.username})}}" class="btn btn-primary"><i class="bi bi-info-circle"></i></a></td>
+                <td  class="text-center"><a href="{{path('user_freelanceDetails', {'freelanceUsername': usersProfile.userId.username})}}" data-toggle="tooltip" data-placement="bottom" title="Modifier votre projet"><i class="bi bi-eye-fill"></i></a></td>
             </tr>
 
         {% endfor %}

@@ -4,54 +4,64 @@
 
 {% block main %}
 
-<div class="offset-lg-1 pt-5 pb-3">
+<header class="offset-lg-2 pt-5 pb-3">
 <h1>{{project.title}}</h1>
-</div>
+</header>
 
-    <div class="offset-lg-1 col-lg-10 p-0">
-    <fieldset id="PersonalInfo">
-    <legend class="mb-5">Voici tous ce que nous savons au sujet de ce projet&nbsp;:</legend>
-    {# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
-        <div style="overflow-x:auto"> 
-        <table class="table table-borderless">
-            <thead>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Commanditaire:</td>
-                    <td>{{ project.ownerId.userId.username }} - {{project.ownerId.userId.userProfile.companyName}}</td>
-                </tr>
-                <tr>
-                    <td>Description :</td>
-                    <td>{{project.description}}</td>
-                </tr>
-                {# <tr>
-                    <td>Nom :</td>
-                    <td>{{freelanceDetails.userProfile.lastName}}</td>
-                </tr>
-                <tr>
-                    <td>Société :</td>
-                    <td>{{freelanceDetails.userProfile.companyName}}</td>
-                </tr>
-                <tr>
-                    <td>Siret :</td>
-                    <td>{{freelanceDetails.userProfile.siret}}</td>
-                </tr>
-                <tr>
-                    <td>Profession&nbsp;:</td>
-                    <td>{{freelanceDetails.userProfile.activity}}</td>
-                </tr>
-                <tr>
-                    <td>Son&nbsp;univers&nbsp;:</td>
-                    <td>{{freelanceDetails.userProfile.aboutUser}}</td>
-                </tr> #}
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-center my-5">
-            <a href="{{ path('offer_create', {'id': project.id}) }}" class="btn btn-primary">Faire une offre pour ce projet</a>
-        </div>
-        </div>
-    </fieldset>
+<section class="offset-lg-2 col-lg-8 p-0">
+<fieldset id="PersonalInfo">
+<legend class="mb-5">Voici tous ce que nous savons au sujet de ce projet&nbsp;:</legend>
+{# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+    <div style="overflow-x:auto"> 
+    <table class="table table-borderless">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Freelance&nbsp;:</td>
+                <td>
+                    <a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.ownerId.userId.username}) }}">{{ project.ownerId.userId.username }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Société&nbsp;:</td>
+                <td>{{project.ownerId.userId.userProfile.companyName}}</td>
+            </tr>
+            <tr>
+                <td>Description&nbsp;:</td>
+                <td>{{project.description}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end mt-5 py-5">
+        <a href="{{ path('offer_create', {'id': project.id}) }}" class="btn btn-primary">Faire une offre pour ce projet</a>
     </div>
+    </div>
+</fieldset>
+</section>
+<hr />
+<section class="offset-lg-2 col-lg-8">
+    <fieldset>
+        <legend>Voici la liste des freelances qui ont proposé leur vision pour le projet de {{ project.ownerId.userId.username }}&nbsp;:</legend>
+        {# {% if offers|length() > 0 %}
+            {% for offer in offers %} #}
+                <p>
+                    Maxime{#{{ offer.contributorId.userId.username }}#}<br />
+                    <small><em>Offre soumise le 10 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+                <p>
+                    Vico{#{{ offer.contributorId.userId.username }}#}<br />
+                    <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+                <p>
+                    Souros{#{{ offer.contributorId.userId.username }}#}<br />
+                    <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+            {# {% endfor %}
+        {% else %}
+
+        {% endif %} #}
+    </fieldset>
+</section>
 
 {% endblock %}

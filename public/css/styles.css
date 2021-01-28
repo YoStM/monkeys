@@ -6,8 +6,30 @@ body {
     padding: 0px;
 }
 
+hr {
+    align-items: center;
+    padding: 1.25rem 0;
+    width: 55%;
+}
+
+p {
+    margin: 1.15rem 0;
+}
+
 tr {
     height: 51px;
+}
+
+
+
+.bi-pencil-square {
+    font-size: 1.75rem;
+    color: #999;
+}
+
+.bi-eye-fill {
+    font-size: 1.75rem;
+    color: #999;
 }
 
 .hidden {
