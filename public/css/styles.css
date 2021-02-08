@@ -20,9 +20,17 @@ tr {
     height: 51px;
 }
 
+.bi-chat-right-text {
+    font-size: 1.75rem;
+    color: #999;
+}
 
+.bi-chat-right-text-fill{
+    font-size: 1.75rem;
+    color: #999;
+}
 
-.bi-pencil-square {
+.bi-check-circle {
     font-size: 1.75rem;
     color: #999;
 }
@@ -32,8 +40,21 @@ tr {
     color: #999;
 }
 
+.bi-pencil-square {
+    font-size: 1.75rem;
+    color: #999;
+}
+
 .hidden {
     display: none;
+}
+
+.offer {
+    border: 1px solid #999;
+    border-radius: 1.5rem;
+    box-shadow: .15rem 0.35rem #999;
+    padding: 0 1.15rem;
+    margin: 1.15rem 0;
 }
 
 .show table {
@@ -41,7 +62,7 @@ tr {
     border-radius: 25px;
     font-style: italic;
     margin-bottom: 3em;
-    box-shadow: 3px 7px #FEE;
+    box-shadow: 7px #FEE;
 }
 
 .toUppercase {

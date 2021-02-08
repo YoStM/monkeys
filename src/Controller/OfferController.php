@@ -43,9 +43,10 @@ class OfferController extends AbstractController
                 $emi->persist($offer);
                 $emi->flush();
 
+                // Problem => we need to make sure that one contributor can make only one offer
 
 
-                $this->addFlash('success', 'Votre proposition a été transmise à ' . $project->getUserId()->getUsername());
+                $this->addFlash('success', 'Votre proposition a été transmise à ' . $project->getOwnerId()->getUserId()->getUsername());
                 return $this->redirectToRoute('offer_details', ['id' => $offer->getId()]);
             }
         } else {

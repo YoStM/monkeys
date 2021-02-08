@@ -4,9 +4,9 @@
 
 {% block main %}
 
-    {% if offer.userId.id is same as(user.id) %}
+    {% if offer.contributorId.userId.id is same as(user.id) %}
         <div class="offset-lg-1 pt-5 pb-3">
-            <h1>Voici l'offre envoyée à {{offer.project.userId.username}}</h1>
+            <h1>Voici l'offre envoyée à {{offer.project.ownerId.userId.username}}</h1>
         </div>
 
         <div class="offset-lg-1 col-lg-10 p-0">
@@ -23,7 +23,7 @@
                             <tbody>
                                 <tr>
                                     <td>Commanditaire:</td>
-                                    <td>{{ offer.project.userId.username }} - {{offer.project.userId.userProfile.companyName}}</td>
+                                    <td>{{ offer.project.ownerId.userId.username }} - {{offer.project.ownerId.userId.userProfile.companyName}}</td>
                                 </tr>
                                 <tr>
                                     <td>Description :</td>
@@ -58,7 +58,7 @@
         </div>
     {% else %}
         <div class="offset-lg-1 pt-5 pb-3">
-            <h1>Voici l'offre envoyée par {{offer.userId.username}}</h1>
+            <h1>Voici l'offre envoyée par {{offer.contributorId.userId.username}}</h1>
         </div>
 
         <div class="offset-lg-1 col-lg-10 p-0">
@@ -75,7 +75,7 @@
                             <tbody>
                                 <tr>
                                     <td>Commanditaire:</td>
-                                    <td>{{ offer.project.userId.username }} - {{offer.project.userId.userProfile.companyName}}</td>
+                                    <td>{{ offer.project.ownerId.userId.username }} - {{offer.project.ownerId.userId.userProfile.companyName}}</td>
                                 </tr>
                                 <tr>
                                     <td>Description :</td>

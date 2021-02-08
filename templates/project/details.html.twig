@@ -4,6 +4,97 @@
 
 {% block main %}
 
+{% if app.user is same as(project.ownerId.userId) %}
+<header class="offset-lg-2 pt-5 pb-3">
+<h1>{{project.title}}</h1>
+</header>
+
+<section class="offset-lg-2 col-lg-8 p-0">
+<fieldset id="PersonalInfo">
+<legend class="mb-5">Voici tous ce que nous savons au sujet de ce projet&nbsp;:</legend>
+{# nesting table in a container with style "overflow-x:auto" in order to get a horiwontal scroll bar if te screen is too small #}
+    <div style="overflow-x:auto"> 
+    <table class="table table-borderless">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Freelance&nbsp;:</td>
+                <td>
+                    <a href="{{ path('user_freelanceDetails', {'freelanceUsername': project.ownerId.userId.username}) }}">{{ project.ownerId.userId.username }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Société&nbsp;:</td>
+                <td>{{project.ownerId.userId.userProfile.companyName}}</td>
+            </tr>
+            <tr>
+                <td>Description&nbsp;:</td>
+                <td>{{project.description}}</td>
+            </tr>
+        </tbody>
+    </table>    
+    </div>
+</fieldset>
+</section>
+<hr />
+<section class="offset-lg-2 col-lg-8">
+    <fieldset>
+        <legend>Voici la liste des freelances qui ont proposé leur vision pour votre projet&nbsp;:</legend>
+        {# {% if offers|length() > 0 %}
+            {% for offer in offers %} #}
+            <div class="d-flex justify-content-start align-items-center offer">
+                <div class="d-flex flex-column">
+                <button class="btn p-0"><i class="bi bi-chat-right-text-fill"></i></button>
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="btn p-0"><i class="bi bi-eye-fill"></i></a>
+                </div>
+                <p class="mx-3">
+                    Maxime{#{{ offer.contributorId.userId.username }}#},<br />pour un budget de <em>{#{{ offer.price }}#}185</em> credits.<br />
+                    <small><em>Offre soumise le 10 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+                <div class="d-flex">
+            
+                <form action="post">
+                <div class="row">
+                    <div class="d-flex flex-column">
+                    <label for="message">Envoyer un message :</label>
+                    <textarea type="textarea" name="message" id="message" cols="55"></textarea>
+                    <button type="submit">Envoyer <i class="bi bi-check-circle"></i></button>
+                    </div>
+                </div>
+                </form>
+            
+            </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center offer">
+                <div class="d-flex flex-column">
+                <button class="btn p-0"><i class="bi bi-chat-right-text"></i></button>
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="btn p-0"><i class="bi bi-eye-fill"></i></a>
+                </div>
+                <p class="mx-3">
+                    Vico{#{{ offer.contributorId.userId.username }}#},<br />pour un budget de <em>{#{{ offer.price }}#}200</em> credits.<br />
+                    <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+            </div>
+            <div class="d-flex justify-content-start align-items-center offer">
+                <div class="d-flex flex-column">
+                <button class="btn p-0"><i class="bi bi-chat-right-text"></i></button>
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="btn p-0"><i class="bi bi-eye-fill"></i></a>
+                </div>
+                <p class="mx-3">
+                    Souros{#{{ offer.contributorId.userId.username }}#},<br />pour un budget de <em>{#{{ offer.price }}#}193</em> credits.<br />
+                    <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
+                </p>
+            </div>
+            {# {% endfor %}
+        {% else %}
+
+        {% endif %} #}
+    </fieldset>
+</section>
+
+{% else %}
+
 <header class="offset-lg-2 pt-5 pb-3">
 <h1>{{project.title}}</h1>
 </header>
@@ -33,9 +124,11 @@
             </tr>
         </tbody>
     </table>
+    
     <div class="d-flex justify-content-end mt-5 py-5">
         <a href="{{ path('offer_create', {'id': project.id}) }}" class="btn btn-primary">Faire une offre pour ce projet</a>
     </div>
+    
     </div>
 </fieldset>
 </section>
@@ -45,23 +138,34 @@
         <legend>Voici la liste des freelances qui ont proposé leur vision pour le projet de {{ project.ownerId.userId.username }}&nbsp;:</legend>
         {# {% if offers|length() > 0 %}
             {% for offer in offers %} #}
+            <div class="d-flex justify-content-start align-items-center">
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="mx-5"><i class="bi bi-eye-fill"></i></a>
                 <p>
-                    Maxime{#{{ offer.contributorId.userId.username }}#}<br />
+                    Maxime{#{{ offer.contributorId.userId.username }}#}, pour un budget de <em>{#{{ offer.price }}#}185</em> credits.<br />
                     <small><em>Offre soumise le 10 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
                 </p>
+            </div>
+            <div class="d-flex justify-content-start align-items-center">
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="mx-5"><i class="bi bi-eye-fill"></i></a>
                 <p>
-                    Vico{#{{ offer.contributorId.userId.username }}#}<br />
+                    Vico{#{{ offer.contributorId.userId.username }}#}, pour un budget de <em>{#{{ offer.price }}#}200</em> credits.<br />
                     <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
                 </p>
+            </div>
+            <div class="d-flex justify-content-start align-items-center">
+                <a href="{#{{ path('offer_details', {'id': offer.id}) }}#}" class="mx-5"><i class="bi bi-eye-fill"></i></a>
                 <p>
-                    Souros{#{{ offer.contributorId.userId.username }}#}<br />
+                    Souros{#{{ offer.contributorId.userId.username }}#}, pour un budget de <em>{#{{ offer.price }}#}193</em> credits.<br />
                     <small><em>Offre soumise le 11 Jan 2021.{#{{ offer.createDate|date('j M Y') }}#}</em></small>
                 </p>
+            </div>
             {# {% endfor %}
         {% else %}
 
         {% endif %} #}
     </fieldset>
 </section>
-
+{% endif %}
 {% endblock %}
+
+{% block javascripts %}{% endblock %}
