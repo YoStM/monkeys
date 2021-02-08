@@ -44,7 +44,7 @@ class OfferController extends AbstractController
                 $emi->flush();
 
                 // Problem => we need to make sure that one contributor can make only one offer
-
+                // Need to think again about inserting a contributor and owner id on registration of users
 
                 $this->addFlash('success', 'Votre proposition a été transmise à ' . $project->getOwnerId()->getUserId()->getUsername());
                 return $this->redirectToRoute('offer_details', ['id' => $offer->getId()]);
