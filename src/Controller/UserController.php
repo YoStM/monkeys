@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Form\UserProfileType;
@@ -40,7 +39,8 @@ class UserController extends AbstractController
             $emi->persist($user);
             $emi->flush();
 
-            $this->addFlash('success', 'Félicitations ! Vous êtes maintenant membre de notre troupe de petit ouistiti. Encore quelques informations à nous confier et vous pourrez enfin travailler avec vos semblables.');
+            $this->addFlash('success', 'Félicitations ! Vous êtes maintenant membre de notre troupe de petit ouistiti.
+             Encore quelques informations à nous confier et vous pourrez enfin travailler avec vos semblables.');
 
             // Redirect the user to the second step of the registration process
             // We have to find a way to associate the user which has been instanciated in this function, to the next function "registrationStepTwo"

@@ -1,5 +1,6 @@
-body {
+html, body {
 
+    box-sizing: border-box;
     font-family: 'Comfortaa', 'Brush Script MT', cursive;
 
     margin: 0px;
@@ -18,6 +19,11 @@ p {
 
 tr {
     height: 51px;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .bi-chat-right-text {
