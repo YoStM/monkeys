@@ -21,6 +21,13 @@ tr {
     height: 51px;
 }
 
+#hero {
+    background-image: url(../img/Jungle-HD-Wallpapers.jpg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
 .container-fluid {
     padding-right: 0px;
     padding-left: 0px;

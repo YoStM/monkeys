@@ -5,9 +5,9 @@
 {% block main %}
 
 {% if app.user and is_granted('ROLE_USER') %}
-<div class="py-5 bg-secondary">
-    <h3 style="text-align:center;">Venez apporter votre contribution aux projets qui ont besoin de vos talents:</h3>
-    <div class="d-flex justify-content-center align-items-center">
+<div id="hero" class="py-5 bg-secondary">
+    <h3 style="text-align:center; color:white;">Venez apporter votre contribution aux projets qui ont besoin de vos talents:</h3>
+    <div class="d-flex justify-content-center align-items-center my-3">
         <input type="text" placeholder="filtrer les projets par catégorie" style="width:555px;">
         <button type="submit" class="btn-primary"><i class="bi bi-search"></i></button>
     </div>
@@ -17,7 +17,7 @@
         <div class="offset-lg-1 pt-5 pb-3">
             <h3>
                 {% for numberOfActiveProjects in countActiveProjects %}
-                {{ numberOfActiveProjects.1.0}} attendent votre contribution !
+                {{ numberOfActiveProjects.1.0}} projets en demande active de contributions !
                 {% endfor %}
             </h3>
         </div>
@@ -25,7 +25,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Activité</th>
                         <th>Catégorie</th>
@@ -63,7 +63,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Titre</th>
                         <th>Catégorie</th>
@@ -88,7 +88,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Titre</th>
                         <th>Catégorie</th>
@@ -111,9 +111,9 @@
 {% else %}
     
 {# If user is not logged in then we display the following #}
-<div class="py-5 bg-secondary">
-    <h3 style="text-align:center;">Venez apporter votre contribution aux projets qui ont besoin de vos talents:</h3>
-    <div class="d-flex justify-content-center align-items-center">
+<div id="hero" class="py-5 bg-secondary">
+    <h3 style="text-align:center; color:white;">Venez apporter votre contribution aux projets qui ont besoin de vos talents:</h3>
+    <div class="d-flex justify-content-center align-items-center pt-5">
         <input type="text" placeholder="filtrer les projets par catégorie" style="width:555px;">
         <button type="submit" class="btn-primary"><i class="bi bi-search"></i></button>
     </div>
@@ -123,7 +123,7 @@
         <div class="offset-lg-1 pt-5 pb-3">
             <h3>
                 {% for numberOfActiveProjects in countActiveProjects %}
-                {{ numberOfActiveProjects.1.0}} attendent votre contribution !
+                {{ numberOfActiveProjects.1.0}} projets en demande active de contributions !
                 {% endfor %}
             </h3>
         </div>
@@ -131,7 +131,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Activité</th>
                         <th>Catégorie</th>
@@ -161,7 +161,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Titre</th>
                         <th>Catégorie</th>
@@ -186,7 +186,7 @@
             <div style="overflow-x:auto">
             <table class="table table-hover">
                 <thead>
-                    <tr class="bg-primary text-white toUppercase">
+                    <tr class="bg-secondary text-white toUppercase">
                         <th>Société</th>
                         <th>Titre</th>
                         <th>Catégorie</th>

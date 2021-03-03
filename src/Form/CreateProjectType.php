@@ -44,10 +44,6 @@ class CreateProjectType extends AbstractType
                     'cols' => 63
                 ]
             ])
-            //->add('createDate')
-            //->add('modifyDate')
-            //->add('active')
-            //->add('UserId')
         ;
     }
 

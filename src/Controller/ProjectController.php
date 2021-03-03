@@ -17,6 +17,58 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProjectController extends AbstractController
 {
     /**
+     * Allow a user to create a project and publish it on the website
+     * 
+     * @Route("/creer_project", name="project_create")
+     */
+    public function create(Request $req, EntityManagerInterface $emi): Response
+    {
+        $user = $this->getUser()->getId();
+        $project = new Project();
+        $projectOwner = new ProjectOwner();
+    
+        $form = $this->createForm(CreateProjectType::class);
+        $form->handleRequest($req);
+    
+        dump($req);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $projectOwner->setUserId($user);
+            $project->setCreateDate(new DateTime("now", new DateTimeZone("Europe/Paris")));
+            $project->setActive(true);
+            $project->setOwnerId($projectOwner);
+    
+            $emi->persist($projectOwner);
+            $emi->persist($project);
+            $emi->flush();
+    
+            $this->addFlash('success', 'Votre projet est enregistré et maintenant diffusé auprès de nos meilleurs freelance');
+    
+            $this->redirectToRoute('main_home');
+        }
+    
+        return $this->render('project/create.html.twig', [
+            'projectForm' => $form->createView()
+        ]);
+    }
+
+    
+    /**
+     * Allows users to get / read more information about ones project
+     * 
+     * @Route("/details_projet/{id}", name="project_details", requirements={"id"="\d+"})
+     */
+    public function details($id): Response
+    {
+        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
+        $project = $projectRepo->findOneBy(['id' => $id]);
+        
+        return $this->render('project/details.html.twig', [
+            'project' => $project
+            ]);
+    }
+        
+    /**
      * Allows the user to have a look at all the projects s/he created
      * 
      * @Route("/mes_projets", name="project_ownProjects")
@@ -31,57 +83,6 @@ class ProjectController extends AbstractController
 
         return $this->render('project/ownProjects.html.twig', [
             'projects' => $projects
-        ]);
-    }
-
-    /**
-     * Allow a user to create a project and publish it on the website
-     * 
-     * @Route("/creer_project", name="project_create")
-     */
-    public function create(Request $req, EntityManagerInterface $emi): Response
-    {
-        $user = $this->getUser()->getId();
-        $project = new Project();
-        $projectOwner = new ProjectOwner();
-
-        $form = $this->createForm(CreateProjectType::class);
-        $form->handleRequest($req);
-
-        dump($req);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $projectOwner->setUserId($user);
-            $project->setCreateDate(new DateTime("now", new DateTimeZone("Europe/Paris")));
-            $project->setActive(true);
-            $project->setOwnerId($projectOwner);
-
-            $emi->persist($projectOwner);
-            $emi->persist($project);
-            $emi->flush();
-
-            $this->addFlash('success', 'Votre projet est enregistré et maintenant diffusé auprès de nos meilleurs freelance');
-
-            $this->redirectToRoute('main_home');
-        }
-
-        return $this->render('project/create.html.twig', [
-            'projectForm' => $form->createView()
-        ]);
-    }
-
-    /**
-     * Allows users to get / read more information about ones project
-     * 
-     * @Route("/details_projet/{id}", name="project_details", requirements={"id"="\d+"})
-     */
-    public function details($id): Response
-    {
-        $projectRepo = $this->getDoctrine()->getRepository(Project::class);
-        $project = $projectRepo->findOneBy(['id' => $id]);
-
-        return $this->render('project/details.html.twig', [
-            'project' => $project
         ]);
     }
 
